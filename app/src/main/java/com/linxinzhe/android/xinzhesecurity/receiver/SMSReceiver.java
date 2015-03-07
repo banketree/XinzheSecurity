@@ -39,12 +39,13 @@ public class SMSReceiver extends BroadcastReceiver {
                     Intent gpsIntent = new Intent(context, GPSService.class);
                     context.startService(gpsIntent);
                     SharedPreferences sp = context.getSharedPreferences("config", Context.MODE_PRIVATE);
-                    String lastLocation = sp.getString("lastLocation", null);
-                    if (TextUtils.isEmpty(lastLocation)) {
+                    String lastLocationGPS = sp.getString("lastLocationGPS", "");
+                    String lastLocationNET = sp.getString("lastLocationNET", "");
+                    if (TextUtils.isEmpty(lastLocationGPS)&&TextUtils.isEmpty(lastLocationNET)) {
                         //得不到位置
                         SmsManager.getDefault().sendTextMessage(sender, null, "获得位置中", null, null);
                     } else {
-                        SmsManager.getDefault().sendTextMessage(sender, null, lastLocation, null, null);
+                        SmsManager.getDefault().sendTextMessage(sender, null, lastLocationGPS+lastLocationNET, null, null);
                     }
                     abortBroadcast();
                 }else if (body.contains("#*alarm*#")){

@@ -20,8 +20,10 @@ import java.io.InputStream;
 
 public class GPSService extends Service {
     private static final String TAG = "GPSService";
-    private LocationManager lm;
-    private MyLocationListener listener;
+    private LocationManager lmGPS;
+    private LocationManager lmNET;
+    private MyGPSLocationListener listenerGPS;
+    private MyNETLocationListener listenerNET;
 
     public GPSService() {
     }
@@ -36,24 +38,28 @@ public class GPSService extends Service {
     public void onCreate() {
         super.onCreate();
         //A-GPS定位
-        lm = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        listener = new MyLocationListener();
+        lmGPS = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        lmNET=(LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        listenerGPS = new MyGPSLocationListener();
+        listenerNET = new MyNETLocationListener();
         //给定位提供者设置限制条件
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_FINE);
-        lm.getBestProvider(criteria, true);
-        lm.requestLocationUpdates("gps", 60 * 1000, 50, listener);
-
+        lmGPS.getBestProvider(criteria, true);
+        lmGPS.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60 * 1000, 50, listenerGPS);
+        lmNET.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60 * 1000, 50, listenerNET);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        lm.removeUpdates(listener);
-        listener = null;
+        lmGPS.removeUpdates(listenerGPS);
+        listenerGPS = null;
+        lmNET.removeUpdates(listenerNET);
+        listenerNET = null;
     }
 
-    private class MyLocationListener implements LocationListener {
+    private class MyNETLocationListener implements LocationListener {
 
         @Override
         public void onLocationChanged(Location location) {
@@ -76,7 +82,51 @@ public class GPSService extends Service {
             //发短信给安全号码
             SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
-            editor.putString("lastLocation", longitude + latitude + accuracy);
+            editor.putString("lastLocationNET", longitude + latitude + accuracy);
+            Log.i(TAG, longitude + latitude + accuracy );
+            editor.commit();
+        }
+
+        @Override
+        public void onStatusChanged(String provider, int status, Bundle extras) {
+
+        }
+
+        @Override
+        public void onProviderEnabled(String provider) {
+
+        }
+
+        @Override
+        public void onProviderDisabled(String provider) {
+
+        }
+    }
+
+    private class MyGPSLocationListener implements LocationListener {
+
+        @Override
+        public void onLocationChanged(Location location) {
+            String longitude = "longitude:" + location.getLongitude() + "\n";
+            String latitude = "latitude:" + location.getLatitude() + "\n";
+            String accuracy = "accuracy:" + location.getAccuracy() + "\n";
+
+            //标准GPS转换成火星坐标
+            try {
+                InputStream is = getAssets().open("axisoffset.dat");
+                ModifyOffset offset = ModifyOffset.getInstance(is);
+                PointDouble pointDouble = offset.s2c(new PointDouble(location.getLongitude(), location.getLatitude()));
+                longitude = "longitude:" + pointDouble.x + "\n";
+                latitude = "latitude:" + pointDouble.y + "\n";
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            //发短信给安全号码
+            SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
+            SharedPreferences.Editor editor = sp.edit();
+            editor.putString("lastLocationGPS", longitude + latitude + accuracy);
             Log.i(TAG, longitude + latitude + accuracy );
             editor.commit();
         }
