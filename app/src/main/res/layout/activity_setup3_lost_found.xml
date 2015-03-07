@@ -18,15 +18,17 @@
         android:text="SIM卡变更后，报警短信发给的安全号码" />
 
     <EditText
+        android:id="@+id/et_setup_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入电话号码"
         android:inputType="phone" />
 
     <Button
+        android:onClick="selectContact"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="选择该号码" />
+        android:text="选择联系人" />
 
     <LinearLayout
         android:layout_width="match_parent"

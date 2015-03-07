@@ -12,5 +12,6 @@
     <string name="title_activity_setup2_lost_found">手机防盗设置向导</string>
     <string name="title_activity_setup3_lost_found">手机防盗设置向导</string>
     <string name="title_activity_setup4_lost_found">手机防盗设置向导</string>
+    <string name="title_activity_select_contact">选择联系人</string>
 
 </resources>

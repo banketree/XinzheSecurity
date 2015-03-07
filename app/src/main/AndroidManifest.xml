@@ -5,6 +5,14 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
 
     <application
         android:allowBackup="true"
@@ -56,6 +64,39 @@
             android:name=".setup.Setup4LostFoundActivity"
             android:label="@string/title_activity_setup4_lost_found" >
         </activity>
+
+        <receiver
+            android:name=".receiver.BootCompleteReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".setup.SelectContactActivity"
+            android:label="@string/title_activity_select_contact"
+            android:parentActivityName=".setup.Setup3LostFoundActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.linxinzhe.android.xinzhesecurity.setup.Setup3LostFoundActivity" />
+        </activity>
+
+        <receiver
+            android:name=".receiver.SMSReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".service.GPSService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
     </application>
 
 </manifest>

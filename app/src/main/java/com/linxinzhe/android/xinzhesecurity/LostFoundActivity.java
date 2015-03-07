@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.TextView;
 
 import com.linxinzhe.android.xinzhesecurity.setup.Setup1LostFoundActivity;
 
@@ -12,6 +14,8 @@ import com.linxinzhe.android.xinzhesecurity.setup.Setup1LostFoundActivity;
 public class LostFoundActivity extends ActionBarActivity {
 
     private SharedPreferences sp;
+    private TextView mSafeNumberTV;
+    private CheckBox mProtectingCB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +31,14 @@ public class LostFoundActivity extends ActionBarActivity {
             startActivity(intent);
             finish();
         }
+
+        //设置结果的反映
+        mSafeNumberTV= (TextView) findViewById(R.id.tv_safenumber);
+        String safenumber = sp.getString("safenumber", "");
+        mSafeNumberTV.setText(safenumber);
+        mProtectingCB= (CheckBox) findViewById(R.id.cb_protecting);
+        boolean protecting = sp.getBoolean("protecting", false);
+        mProtectingCB.setChecked(protecting);
     }
 
     public void reEnterSetup(View view){
@@ -34,4 +46,5 @@ public class LostFoundActivity extends ActionBarActivity {
         startActivity(intent);
         finish();
     }
+
 }
