@@ -18,29 +18,25 @@ public class SettingActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        sp=getSharedPreferences("config",MODE_PRIVATE);
-        mUpdateSIV= (SettingItemView) findViewById(R.id.siv_update);
+        sp = getSharedPreferences("config", MODE_PRIVATE);
+        mUpdateSIV = (SettingItemView) findViewById(R.id.siv_update);
         boolean update = sp.getBoolean("update", false);
-        if (update){
+        if (update) {
             mUpdateSIV.setChecked(true);
-            mUpdateSIV.setDesc("自动升级已经开启");
-        }else {
+        } else {
             mUpdateSIV.setChecked(false);
-            mUpdateSIV.setDesc("自动升级已经关闭");
         }
         mUpdateSIV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 SharedPreferences.Editor editor = sp.edit();
                 //自动升级开关
-                if (mUpdateSIV.isChecked()){
+                if (mUpdateSIV.isChecked()) {
                     mUpdateSIV.setChecked(false);
-                    mUpdateSIV.setDesc("自动升级已经关闭");
-                    editor.putBoolean("update",false);
-                }else {
+                    editor.putBoolean("update", false);
+                } else {
                     mUpdateSIV.setChecked(true);
-                    mUpdateSIV.setDesc("自动升级已经开启");
-                    editor.putBoolean("update",true);
+                    editor.putBoolean("update", true);
                 }
                 editor.commit();
             }

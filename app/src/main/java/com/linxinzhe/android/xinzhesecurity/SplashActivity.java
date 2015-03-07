@@ -97,7 +97,7 @@ public class SplashActivity extends Activity {
                 public void run() {
                     enterHome();
                 }
-            }, 2 * 1000);
+            }, 1 * 1000);
         }
         mUpdateInfoTV = (TextView) findViewById(R.id.tv_update_info);
 
@@ -216,9 +216,9 @@ public class SplashActivity extends Activity {
                 } finally {
                     long endTime = System.currentTimeMillis();
                     long durationTime = endTime - startTime;
-                    if (durationTime < 2 * 1000) {
+                    if (durationTime < 1 * 1000) {
                         try {
-                            Thread.sleep(2 * 1000 - durationTime);
+                            Thread.sleep(1 * 1000 - durationTime);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }

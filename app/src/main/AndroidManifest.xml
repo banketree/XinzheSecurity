@@ -32,6 +32,30 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.linxinzhe.android.xinzhesecurity.HomeActivity" />
         </activity>
+        <activity
+            android:name=".LostFoundActivity"
+            android:label="@string/title_activity_lost_find"
+            android:parentActivityName=".HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.linxinzhe.android.xinzhesecurity.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".setup.Setup1LostFoundActivity"
+            android:label="@string/title_activity_setup_lost_found" >
+        </activity>
+        <activity
+            android:name=".setup.Setup2LostFoundActivity"
+            android:label="@string/title_activity_setup2_lost_found" >
+        </activity>
+        <activity
+            android:name=".setup.Setup3LostFoundActivity"
+            android:label="@string/title_activity_setup3_lost_found" >
+        </activity>
+        <activity
+            android:name=".setup.Setup4LostFoundActivity"
+            android:label="@string/title_activity_setup4_lost_found" >
+        </activity>
     </application>
 
 </manifest>

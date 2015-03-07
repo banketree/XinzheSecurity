@@ -7,5 +7,10 @@
     <string name="title_activity_setting">设置中心</string>
 
     <string name="hello_world">Hello world!</string>
+    <string name="title_activity_lost_find">手机防盗</string>
+    <string name="title_activity_setup_lost_found">手机防盗设置向导</string>
+    <string name="title_activity_setup2_lost_found">手机防盗设置向导</string>
+    <string name="title_activity_setup3_lost_found">手机防盗设置向导</string>
+    <string name="title_activity_setup4_lost_found">手机防盗设置向导</string>
 
 </resources>
