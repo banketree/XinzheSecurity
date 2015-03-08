@@ -26,36 +26,48 @@
         android:id="@+id/siv_sim_lock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        linxinzhe:desc_on="SIM卡已经绑定"
         linxinzhe:desc_off="SIM卡未绑定"
+        linxinzhe:desc_on="SIM卡已经绑定"
         linxinzhe:title="点击绑定SIM卡" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="bottom|center_horizontal"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="wrap_content"
+        <TextView
+            style="@style/TextContent"
+            android:text="请向左滑动继续设置" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/presence_invisible" />
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/presence_online" />
+            android:gravity="bottom|center_horizontal"
+            android:orientation="horizontal">
 
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/presence_invisible" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/presence_invisible" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/presence_invisible" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/presence_online" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/presence_invisible" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/presence_invisible" />
+
+        </LinearLayout>
     </LinearLayout>
 
 

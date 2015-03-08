@@ -13,5 +13,7 @@
     <string name="title_activity_setup3_lost_found">手机防盗设置向导</string>
     <string name="title_activity_setup4_lost_found">手机防盗设置向导</string>
     <string name="title_activity_select_contact">选择联系人</string>
+    <string name="xinzhesecurity_device_admin">欣哲卫士权限激活</string>
+    <string name="xinzhesecurity_device_admin_description">获取系统高级权限</string>
 
 </resources>

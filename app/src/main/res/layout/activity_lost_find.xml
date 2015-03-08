@@ -53,9 +53,9 @@
         android:background="#44000000" />
 
     <Button
+        style="@style/TextContent"
         android:layout_width="match_parent"
         android:onClick="reEnterSetup"
-        style="@style/TextContent"
         android:text="重新进入设置向导" />
 
     <View
@@ -65,25 +65,47 @@
         android:background="#44000000" />
 
     <TextView
-        android:background="#66000000"
+        style="@style/TextContent"
         android:layout_width="match_parent"
-        style="@style/TextContent"
+        android:background="#66000000"
         android:text="功能简介" />
+
     <TextView
         style="@style/TextContent"
-        android:text="GPS追踪:#*location*#"
-        android:drawableLeft="@android:drawable/star_big_on"/>
+        android:drawableLeft="@android:drawable/star_big_on"
+        android:text="GPS追踪:#*location*#" />
+
     <TextView
         style="@style/TextContent"
-        android:text="播放报警音乐：#*alarm*#"
-        android:drawableLeft="@android:drawable/star_big_on"/>
+        android:drawableLeft="@android:drawable/star_big_on"
+        android:text="播放报警音乐：#*alarm*#" />
+
     <TextView
         style="@style/TextContent"
-        android:text="远程数据销毁:#*wipedata*#"
-        android:drawableLeft="@android:drawable/star_big_on"/>
+        android:drawableLeft="@android:drawable/star_big_on"
+        android:text="远程数据销毁:#*wipedata*#" />
+
     <TextView
         style="@style/TextContent"
-        android:text="远程锁屏:#*lockscreen*#"
-        android:drawableLeft="@android:drawable/star_big_on"/>
+        android:drawableLeft="@android:drawable/star_big_on"
+        android:text="远程锁屏:#*lockscreen*#" />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/btn_closeAdim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关闭远程锁屏及数据销毁权限"
+            android:visibility="invisible"/>
+        <Button
+            android:id="@+id/btn_openAdim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开启远程锁屏及数据销毁权限" />
+
+        </RelativeLayout>
+
 
 </LinearLayout>
