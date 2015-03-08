@@ -37,15 +37,14 @@ public class SelectContactActivity extends ActionBarActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String phone = contactData.get(position).get("phone");
-                Intent phoneData=new Intent();
-                phoneData.putExtra("phone",phone);
+                Intent phoneData = new Intent();
+                phoneData.putExtra("phone", phone);
                 setResult(RESULT_OK, phoneData);
 
                 finish();
             }
         });
     }
-
 
 
     /**

@@ -12,7 +12,8 @@
     <TextView
         style="@style/SetupTitle"
         android:gravity="left"
-        android:text="防盗设置：" />
+        android:text="防盗状态：" />
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -24,6 +25,22 @@
 
         <TextView
             android:id="@+id/tv_safenumber"
+            style="@style/TextContent"
+            android:layout_alignParentRight="true"
+            android:text="xxxx" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <TextView
+            style="@style/TextContent"
+            android:text="锁屏密码" />
+
+        <TextView
+            android:id="@+id/tv_lockpsw"
             style="@style/TextContent"
             android:layout_alignParentRight="true"
             android:text="xxxx" />
@@ -78,24 +95,49 @@
     <TextView
         style="@style/TextContent"
         android:drawableLeft="@mipmap/ic_sms_black_18dp"
-        android:text="GPS定位:#*location*#" />
+        android:text="GPS定位:#*定位*#" />
 
     <TextView
         style="@style/TextContent"
         android:drawableLeft="@mipmap/ic_sms_black_18dp"
-        android:text="警报声音：#*alarm*#" />
+        android:text="警报声音：#*警报*#" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            style="@style/TextContent"
+            android:drawableLeft="@mipmap/ic_sms_black_18dp"
+            android:text="锁死屏幕:#*锁死*#" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="默认9999" />
+    </LinearLayout>
 
     <TextView
         style="@style/TextContent"
         android:drawableLeft="@mipmap/ic_sms_black_18dp"
-        android:text="数据销毁:#*wipedata*#" />
-
-    <TextView
-        style="@style/TextContent"
-        android:drawableLeft="@mipmap/ic_sms_black_18dp"
-        android:text="锁死屏幕:#*lockscreen*#" />
+        android:text="数据销毁:#*销毁*#" />
 
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="testLock"
+            android:text="测试是锁屏" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="若没开启则会调用激活界面，若开启了则无反应" />
+    </LinearLayout>
 
 
 </LinearLayout>

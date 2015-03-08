@@ -19,11 +19,12 @@
         android:id="@+id/btn_open_update_package"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="打开下载的升级包"
         android:layout_above="@+id/bottom_linear_layout"
-        android:layout_toRightOf="@+id/tv_splash_version"
         android:layout_toEndOf="@+id/tv_splash_version"
-        android:visibility="invisible"/>
+        android:layout_toRightOf="@+id/tv_splash_version"
+        android:text="打开下载的升级包"
+        android:visibility="invisible" />
+
     <LinearLayout
         android:id="@+id/bottom_linear_layout"
         android:layout_width="match_parent"

@@ -48,9 +48,9 @@ public class Setup2LostFoundActivity extends BaseSetupActivity {
         });
 
         //原3
-        mSetupPhoneET= (EditText) findViewById(R.id.et_setup_phone);
+        mSetupPhoneET = (EditText) findViewById(R.id.et_setup_phone);
         //回显号码
-        mSetupPhoneET.setText(sp.getString("safenumber",""));
+        mSetupPhoneET.setText(sp.getString("safenumber", ""));
     }
 
     @Override
@@ -64,12 +64,12 @@ public class Setup2LostFoundActivity extends BaseSetupActivity {
 
         //原3
         String phone = mSetupPhoneET.getText().toString().trim();
-        if (TextUtils.isEmpty(phone)){
-            Toast.makeText(this,"请设置安全号码",Toast.LENGTH_LONG).show();
+        if (TextUtils.isEmpty(phone)) {
+            Toast.makeText(this, "请设置安全号码", Toast.LENGTH_LONG).show();
             return;
         }
-        SharedPreferences.Editor editor=sp.edit();
-        editor.putString("safenumber",phone);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("safenumber", phone);
         editor.commit();
 
         Intent intent = new Intent(this, Setup3LostFoundActivity.class);
@@ -91,10 +91,11 @@ public class Setup2LostFoundActivity extends BaseSetupActivity {
         Intent intent = new Intent(this, SelectContactActivity.class);
         startActivityForResult(intent, 0);
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (data==null){
+        if (data == null) {
             return;
         }
         String phone = data.getStringExtra("phone").replace("-", "");

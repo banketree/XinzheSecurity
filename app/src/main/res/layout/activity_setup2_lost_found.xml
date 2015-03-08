@@ -24,16 +24,16 @@
 
     <com.linxinzhe.android.xinzhesecurity.ui.SettingItemView
         android:id="@+id/siv_sim_lock"
-        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         linxinzhe:desc_off="SIM卡未绑定"
         linxinzhe:desc_on="SIM卡已经绑定"
         linxinzhe:title="点击绑定SIM卡" />
 
     <TextView
-        android:layout_marginTop="20dp"
         style="@style/TextContent"
+        android:layout_marginTop="20dp"
         android:text="安全号码：" />
 
     <TextView

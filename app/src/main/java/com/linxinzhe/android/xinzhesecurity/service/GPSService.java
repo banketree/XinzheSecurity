@@ -39,7 +39,7 @@ public class GPSService extends Service {
         super.onCreate();
         //A-GPS定位
         lmGPS = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        lmNET=(LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        lmNET = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         listenerGPS = new MyGPSLocationListener();
         listenerNET = new MyNETLocationListener();
         //给定位提供者设置限制条件
@@ -83,7 +83,7 @@ public class GPSService extends Service {
             SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             editor.putString("lastLocationNET", longitude + latitude + accuracy);
-            Log.i(TAG, longitude + latitude + accuracy );
+            Log.i(TAG, longitude + latitude + accuracy);
             editor.commit();
         }
 
@@ -127,7 +127,7 @@ public class GPSService extends Service {
             SharedPreferences sp = getSharedPreferences("config", MODE_PRIVATE);
             SharedPreferences.Editor editor = sp.edit();
             editor.putString("lastLocationGPS", longitude + latitude + accuracy);
-            Log.i(TAG, longitude + latitude + accuracy );
+            Log.i(TAG, longitude + latitude + accuracy);
             editor.commit();
         }
 

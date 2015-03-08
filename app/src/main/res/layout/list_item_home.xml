@@ -7,14 +7,15 @@
 
     <ImageView
         android:id="@+id/iv_item"
-        android:src="@mipmap/ic_screen_lock_portrait_black_48dp"
         android:layout_width="90dp"
-        android:layout_height="90dp" />
+        android:layout_height="90dp"
+        android:src="@mipmap/ic_screen_lock_portrait_black_48dp" />
+
     <TextView
         android:id="@+id/tv_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="23sp"
+        android:text="手机防盗"
         android:textColor="#000000"
-        android:text="手机防盗"/>
+        android:textSize="23sp" />
 </LinearLayout>

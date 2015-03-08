@@ -37,7 +37,7 @@ public class SMSReceiver extends BroadcastReceiver {
             //判断是否是安全号码
             String safenumber = sp.getString("safenumber", "");
             if (sender.contains(safenumber)) {
-                if (body.contains("#*location*#")) {
+                if (body.contains("#*定位*#")) {
                     Log.i(TAG, "得到手机GPS");
                     Intent gpsIntent = new Intent(context, GPSService.class);
                     context.startService(gpsIntent);
@@ -51,28 +51,27 @@ public class SMSReceiver extends BroadcastReceiver {
                         SmsManager.getDefault().sendTextMessage(sender, null, lastLocationGPS + lastLocationNET, null, null);
                     }
                     abortBroadcast();
-                } else if (body.contains("#*alarm*#")) {
+                } else if (body.contains("#*警报*#")) {
                     Log.i(TAG, "得到报警信号");
                     MediaPlayer player = MediaPlayer.create(context, R.raw.ylzs);
                     player.setLooping(false);
                     player.setVolume(1.0f, 1.0f);
                     player.start();
                     abortBroadcast();
-                } else if (body.contains("#*wipedata*#")) {
+                } else if (body.contains("#*销毁*#")) {
 
                     dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
                     dpm.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE);
                     dpm.wipeData(0);
                     abortBroadcast();
                     Log.i(TAG, "得到消除信号");
-                } else if (body.contains("#*lockscreen*#")) {
+                } else if (body.contains("#*锁死*#")) {
                     Log.i(TAG, "得到锁屏信号");
                     dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
                     ComponentName who = new ComponentName(context, MyAdminReceiver.class);
                     if (dpm.isAdminActive(who)) {
                         dpm.lockNow();
-
-                        dpm.resetPassword("123", 0);
+                        dpm.resetPassword(sp.getString("lockpsw", "9999"), 0);
                         abortBroadcast();
                     }
                 }

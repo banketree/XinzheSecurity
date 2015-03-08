@@ -23,7 +23,7 @@
         android:text="远程锁死屏幕后解锁所用的密码" />
 
     <EditText
-        android:id="@+id/et_setup_phone"
+        android:id="@+id/et_lock_psw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入锁屏密码"
@@ -71,14 +71,14 @@
             android:id="@+id/btn_closeAdim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="关闭权限"
-            android:visibility="invisible" />
+            android:text="关闭权限" />
 
         <Button
             android:id="@+id/btn_openAdim"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="开启权限" />
+            android:text="开启权限"
+            android:visibility="invisible" />
 
     </RelativeLayout>
 

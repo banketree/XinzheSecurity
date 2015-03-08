@@ -76,7 +76,7 @@ public class SplashActivity extends Activity {
                 case NETWORK_ERROR:
                     enterHome();
                     Log.d(TAG, "网络错误");
-                    Toast.makeText(SplashActivity.this,"网路异常，无法获取更新",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SplashActivity.this, "网路异常，无法获取更新", Toast.LENGTH_SHORT).show();
                     break;
                 case JSON_ERROR:
                     enterHome();
@@ -109,9 +109,9 @@ public class SplashActivity extends Activity {
             }, 1 * 1000);
         }
         mUpdateProgressTV = (TextView) findViewById(R.id.tv_update_progress);
-        mUpdateProgressPB= (ProgressBar) findViewById(R.id.pb_update_progress);
+        mUpdateProgressPB = (ProgressBar) findViewById(R.id.pb_update_progress);
         //若用户不幸取消安装则提供一个按钮找回安装路径
-        mOpenUpdatePackageBTN= (Button) findViewById(R.id.btn_open_update_package);
+        mOpenUpdatePackageBTN = (Button) findViewById(R.id.btn_open_update_package);
         mOpenUpdatePackageBTN.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -137,9 +137,9 @@ public class SplashActivity extends Activity {
                     HttpURLConnection connection = (HttpURLConnection) apkUrl.openConnection();
                     connection.setRequestMethod("GET");
                     connection.setConnectTimeout(10 * 1000);
-                    connection.setReadTimeout(5*1000);
+                    connection.setReadTimeout(5 * 1000);
                     int responseCode = connection.getResponseCode();
-                    if (responseCode/100 == 2) {
+                    if (responseCode / 100 == 2) {
                         InputStream is = connection.getInputStream();
                         String jsonStr = StreamTools.readFromStream(is);
                         Log.i(TAG, "获取版本更新信息成功" + jsonStr);
@@ -221,6 +221,7 @@ public class SplashActivity extends Activity {
                             startActivity(intent);
                             mOpenUpdatePackageBTN.setVisibility(View.VISIBLE);
                         }
+
                         @Override
                         public void onFailure(Throwable t, int errorNo, String strMsg) {
                             t.printStackTrace();
@@ -228,6 +229,7 @@ public class SplashActivity extends Activity {
                             Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_LONG).show();
                             super.onFailure(t, errorNo, strMsg);
                         }
+
                         @Override
                         public void onLoading(long count, long current) {
                             super.onLoading(count, current);
@@ -250,7 +252,6 @@ public class SplashActivity extends Activity {
         startActivity(intent);
         finish();
     }
-
 
 
     /**
