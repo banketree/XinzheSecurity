@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.linxinzhe.android.xinzhesecurity.R;
@@ -15,6 +16,8 @@ public class Setup2LostFoundActivity extends BaseSetupActivity {
 
     private SettingItemView mSimLockSIV;
     private TelephonyManager tm;
+
+    private EditText mSetupPhoneET;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,11 @@ public class Setup2LostFoundActivity extends BaseSetupActivity {
                 editor.commit();
             }
         });
+
+        //原3
+        mSetupPhoneET= (EditText) findViewById(R.id.et_setup_phone);
+        //回显号码
+        mSetupPhoneET.setText(sp.getString("safenumber",""));
     }
 
     @Override
@@ -53,10 +61,21 @@ public class Setup2LostFoundActivity extends BaseSetupActivity {
             Toast.makeText(this, "SIM卡没绑定", Toast.LENGTH_LONG).show();
             return;
         }
+
+        //原3
+        String phone = mSetupPhoneET.getText().toString().trim();
+        if (TextUtils.isEmpty(phone)){
+            Toast.makeText(this,"请设置安全号码",Toast.LENGTH_LONG).show();
+            return;
+        }
+        SharedPreferences.Editor editor=sp.edit();
+        editor.putString("safenumber",phone);
+        editor.commit();
+
         Intent intent = new Intent(this, Setup3LostFoundActivity.class);
         startActivity(intent);
         finish();
-        overridePendingTransition(R.anim.tran_in, R.anim.tran_out);
+        overridePendingTransition(R.anim.tran_next_in, R.anim.tran_next_out);
     }
 
     @Override
@@ -67,4 +86,18 @@ public class Setup2LostFoundActivity extends BaseSetupActivity {
         overridePendingTransition(R.anim.tran_prev_in, R.anim.tran_prev_out);
     }
 
+    //原3
+    public void selectContact(View view) {
+        Intent intent = new Intent(this, SelectContactActivity.class);
+        startActivityForResult(intent, 0);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data==null){
+            return;
+        }
+        String phone = data.getStringExtra("phone").replace("-", "");
+        mSetupPhoneET.setText(phone);
+    }
 }

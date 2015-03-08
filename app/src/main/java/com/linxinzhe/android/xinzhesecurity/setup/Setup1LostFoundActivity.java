@@ -2,7 +2,6 @@ package com.linxinzhe.android.xinzhesecurity.setup;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.GestureDetector;
 
 import com.linxinzhe.android.xinzhesecurity.R;
 
@@ -20,7 +19,7 @@ public class Setup1LostFoundActivity extends BaseSetupActivity {
         Intent intent = new Intent(this, Setup2LostFoundActivity.class);
         startActivity(intent);
         finish();
-        overridePendingTransition(R.anim.tran_in, R.anim.tran_out);
+        overridePendingTransition(R.anim.tran_next_in, R.anim.tran_next_out);
     }
 
     @Override

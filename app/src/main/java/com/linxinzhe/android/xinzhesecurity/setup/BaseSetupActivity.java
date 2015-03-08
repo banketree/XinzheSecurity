@@ -6,20 +6,18 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 
-/**
- * Created by linxinzhe on 2015/3/7.
- */
 public abstract class BaseSetupActivity extends ActionBarActivity {
 
-    private GestureDetector detector;
-
+    private GestureDetector gestureDetector;
     protected SharedPreferences sp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //方便继承的类获取sp
         sp = getSharedPreferences("config", MODE_PRIVATE);
-        detector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
+        //设置滑动切换设置页面
+        gestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
             public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
                 if (e2.getRawX() - e1.getRawX() > 200) {
@@ -37,7 +35,7 @@ public abstract class BaseSetupActivity extends ActionBarActivity {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        detector.onTouchEvent(event);
+        gestureDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
 

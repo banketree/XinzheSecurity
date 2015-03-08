@@ -12,7 +12,7 @@
 
     <TextView
         style="@style/SetupTitle"
-        android:text="2.手机卡绑定" />
+        android:text="2.安全设置" />
 
     <TextView
         style="@style/TextContent"
@@ -20,15 +20,38 @@
 
     <TextView
         style="@style/TextContent"
-        android:text="重启手机，若发现SIM卡变化则会发送报警短信" />
+        android:text="若SIM卡变化了，则会发送报警短信到稍后设置的安全号码" />
 
     <com.linxinzhe.android.xinzhesecurity.ui.SettingItemView
         android:id="@+id/siv_sim_lock"
+        android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         linxinzhe:desc_off="SIM卡未绑定"
         linxinzhe:desc_on="SIM卡已经绑定"
         linxinzhe:title="点击绑定SIM卡" />
+
+    <TextView
+        android:layout_marginTop="20dp"
+        style="@style/TextContent"
+        android:text="安全号码：" />
+
+    <TextView
+        style="@style/TextContent"
+        android:text="安全号码用于向该手机发送命令，获取手机GPS位置、手机报警、远程锁屏、远程消除信息" />
+
+    <EditText
+        android:id="@+id/et_setup_phone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="请输入电话号码"
+        android:inputType="phone" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="selectContact"
+        android:text="选择您的手机联系人" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,10 +85,6 @@
                 android:layout_height="wrap_content"
                 android:src="@android:drawable/presence_invisible" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/presence_invisible" />
 
         </LinearLayout>
     </LinearLayout>

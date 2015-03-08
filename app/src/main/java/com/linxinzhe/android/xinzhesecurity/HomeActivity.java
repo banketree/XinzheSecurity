@@ -28,14 +28,14 @@ public class HomeActivity extends ActionBarActivity {
     private MyAdapter mAdapter;
 
     private static String[] names = {
-            "手机防盗", "通讯密保", "软件管理",
-            "内存管理", "流量统计", "手机杀毒",
-            "手机优化", "高级工具", "设置中心"
+            "手机防盗", "手机杀毒", "手机优化",
+            "通讯密保", "软件管理", "内存管理",
+            "流量统计", "高级工具", "设置中心"
     };
     private static int[] icons = {
-            R.mipmap.ic_screen_lock_portrait_black_36dp, R.mipmap.ic_vpn_key_black_36dp, R.mipmap.ic_dvr_black_36dp,
-            R.mipmap.ic_web_black_36dp, R.mipmap.ic_import_export_black_36dp, R.mipmap.ic_security_black_36dp,
-            R.mipmap.ic_format_paint_black_36dp, R.mipmap.ic_work_black_36dp, R.mipmap.ic_settings_applications_black_36dp
+            R.mipmap.ic_screen_lock_portrait_black_48dp, R.mipmap.ic_security_black_48dp, R.mipmap.ic_format_paint_black_48dp,
+            R.mipmap.ic_vpn_key_black_48dp, R.mipmap.ic_dvr_black_48dp, R.mipmap.ic_web_black_48dp,
+            R.mipmap.ic_import_export_black_48dp, R.mipmap.ic_work_black_48dp, R.mipmap.ic_settings_applications_black_48dp
     };
 
     @Override
@@ -107,7 +107,7 @@ public class HomeActivity extends ActionBarActivity {
                     editor.commit();
                     dialog.dismiss();
                     //进入手机防盗
-                    Intent intent=new Intent(HomeActivity.this,LostFoundActivity.class);
+                    Intent intent = new Intent(HomeActivity.this, LostFoundActivity.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(HomeActivity.this, "密码不一致", Toast.LENGTH_SHORT).show();
@@ -147,7 +147,7 @@ public class HomeActivity extends ActionBarActivity {
                 if (MD5Utils.encrypt(password).equals(savePassword)) {
                     //进入手机防盗页面
                     dialog.dismiss();
-                    Intent intent=new Intent(HomeActivity.this,LostFoundActivity.class);
+                    Intent intent = new Intent(HomeActivity.this, LostFoundActivity.class);
                     startActivity(intent);
                 } else {
                     mSetupPwdET.setText("");

@@ -60,10 +60,6 @@
             android:name=".setup.Setup3LostFoundActivity"
             android:label="@string/title_activity_setup3_lost_found" >
         </activity>
-        <activity
-            android:name=".setup.Setup4LostFoundActivity"
-            android:label="@string/title_activity_setup4_lost_found" >
-        </activity>
 
         <receiver
             android:name=".receiver.BootCompleteReceiver"

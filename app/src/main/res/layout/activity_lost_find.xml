@@ -9,9 +9,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.linxinzhe.android.xinzhesecurity.LostFoundActivity">
 
+    <TextView
+        style="@style/SetupTitle"
+        android:gravity="left"
+        android:text="防盗设置：" />
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
+
 
         <TextView
             style="@style/TextContent"
@@ -72,40 +77,25 @@
 
     <TextView
         style="@style/TextContent"
-        android:drawableLeft="@android:drawable/star_big_on"
-        android:text="GPS追踪:#*location*#" />
+        android:drawableLeft="@mipmap/ic_sms_black_18dp"
+        android:text="GPS定位:#*location*#" />
 
     <TextView
         style="@style/TextContent"
-        android:drawableLeft="@android:drawable/star_big_on"
-        android:text="播放报警音乐：#*alarm*#" />
+        android:drawableLeft="@mipmap/ic_sms_black_18dp"
+        android:text="警报声音：#*alarm*#" />
 
     <TextView
         style="@style/TextContent"
-        android:drawableLeft="@android:drawable/star_big_on"
-        android:text="远程数据销毁:#*wipedata*#" />
+        android:drawableLeft="@mipmap/ic_sms_black_18dp"
+        android:text="数据销毁:#*wipedata*#" />
 
     <TextView
         style="@style/TextContent"
-        android:drawableLeft="@android:drawable/star_big_on"
-        android:text="远程锁屏:#*lockscreen*#" />
+        android:drawableLeft="@mipmap/ic_sms_black_18dp"
+        android:text="锁死屏幕:#*lockscreen*#" />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <Button
-            android:id="@+id/btn_closeAdim"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="关闭远程锁屏及数据销毁权限"
-            android:visibility="invisible"/>
-        <Button
-            android:id="@+id/btn_openAdim"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="开启远程锁屏及数据销毁权限" />
 
-        </RelativeLayout>
 
 
 </LinearLayout>

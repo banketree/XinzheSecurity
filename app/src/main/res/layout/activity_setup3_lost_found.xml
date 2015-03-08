@@ -9,27 +9,78 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.linxinzhe.android.xinzhesecurity.setup.Setup1LostFoundActivity">
 
+
     <TextView
         style="@style/SetupTitle"
-        android:text="3.设置安全号码" />
+        android:text="4.最后一步" />
 
     <TextView
         style="@style/TextContent"
-        android:text="SIM卡变更后，报警短信发给的安全号码" />
+        android:text="锁屏密码：" />
+
+    <TextView
+        style="@style/TextContent"
+        android:text="远程锁死屏幕后解锁所用的密码" />
 
     <EditText
         android:id="@+id/et_setup_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="请输入电话号码"
+        android:hint="请输入锁屏密码"
         android:inputType="phone" />
 
-    <Button
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:text="重要"
+        android:textColor="#000000"
+        android:textSize="40sp" />
+
+    <TextView
+        style="@style/TextContent"
+        android:layout_gravity="center"
+        android:text="手机防盗功能开关：" />
+
+    <CheckBox
+        android:id="@+id/cb_protecting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="未开启防盗保护"
+        android:textSize="20sp" />
+
+    <TextView
+        style="@style/TextContent"
+        android:layout_gravity="center"
+        android:text="远程锁屏和消除数据开关：" />
+
+    <TextView
+        style="@style/ExplainContent"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:text="该功能属于高级功能，需要系统权限" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:onClick="selectContact"
-        android:text="选择联系人" />
+        android:gravity="center">
 
+        <Button
+            android:id="@+id/btn_closeAdim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="关闭权限"
+            android:visibility="invisible" />
+
+        <Button
+            android:id="@+id/btn_openAdim"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开启权限" />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,11 +113,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@android:drawable/presence_online" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@android:drawable/presence_invisible" />
 
         </LinearLayout>
     </LinearLayout>

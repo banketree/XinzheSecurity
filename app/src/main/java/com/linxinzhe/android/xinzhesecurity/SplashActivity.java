@@ -13,8 +13,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.os.Bundle;
 import android.util.Log;
-//import android.view.animation.AlphaAnimation;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,11 +47,16 @@ public class SplashActivity extends Activity {
     private SharedPreferences sp;
 
     private TextView mSplashVersionTV;
-    private TextView mUpdateInfoTV;
+
+    private TextView mUpdateProgressTV;
+    private ProgressBar mUpdateProgressPB;
+
+    private String apkFile;
+    private Button mOpenUpdatePackageBTN;
 
     private String description;
     private String apkurl;
-
+    //static暂未实现
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
@@ -65,15 +71,16 @@ public class SplashActivity extends Activity {
                     break;
                 case URL_ERROR:
                     enterHome();
-                    Toast.makeText(SplashActivity.this, "URL错误", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "URL错误");
                     break;
                 case NETWORK_ERROR:
                     enterHome();
-                    Toast.makeText(SplashActivity.this, "网络错误", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "网络错误");
+                    Toast.makeText(SplashActivity.this,"网路异常，无法获取更新",Toast.LENGTH_SHORT).show();
                     break;
                 case JSON_ERROR:
                     enterHome();
-                    Toast.makeText(SplashActivity.this, "JSON解析错误", Toast.LENGTH_SHORT).show();
+                    Log.d(TAG, "JSON解析错误");
                     break;
             }
         }
@@ -83,15 +90,17 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
-        sp = getSharedPreferences("config", MODE_PRIVATE);
-
+        //显示当前版本号
         mSplashVersionTV = (TextView) findViewById(R.id.tv_splash_version);
         mSplashVersionTV.setText("版本：" + getVersionName());
+
+        //检查设置中心是否启动更新
+        sp = getSharedPreferences("config", MODE_PRIVATE);
         if (sp.getBoolean("update", false)) {
             //检查升级
             checkUpdate();
         } else {
+            //为了用户体验，缓冲再进入
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -99,79 +108,20 @@ public class SplashActivity extends Activity {
                 }
             }, 1 * 1000);
         }
-        mUpdateInfoTV = (TextView) findViewById(R.id.tv_update_info);
-
-    }
-
-    private void showUpdateDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("请升级");
-        builder.setMessage(description);
-        builder.setPositiveButton("立刻升级", new DialogInterface.OnClickListener() {
+        mUpdateProgressTV = (TextView) findViewById(R.id.tv_update_progress);
+        mUpdateProgressPB= (ProgressBar) findViewById(R.id.pb_update_progress);
+        //若用户不幸取消安装则提供一个按钮找回安装路径
+        mOpenUpdatePackageBTN= (Button) findViewById(R.id.btn_open_update_package);
+        mOpenUpdatePackageBTN.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //下载Apk并替换安装
-                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
-                    FinalHttp finalHttp = new FinalHttp();
-                    String apkFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + (new File(apkurl)).getName();
-                    finalHttp.download(apkurl, apkFile, new AjaxCallBack<File>() {
-                        @Override
-                        public void onSuccess(File file) {
-                            super.onSuccess(file);
-                            installAPK(file);
-                        }
-
-                        private void installAPK(File file) {
-                            Intent intent = new Intent();
-                            intent.setAction("android.intent.action.VIEW");
-                            intent.addCategory("android.intent.category.DEFAULT");
-                            intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-                            startActivity(intent);
-                        }
-
-                        @Override
-                        public void onFailure(Throwable t, int errorNo, String strMsg) {
-                            t.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_LONG).show();
-                            super.onFailure(t, errorNo, strMsg);
-                        }
-
-                        @Override
-                        public void onLoading(long count, long current) {
-                            super.onLoading(count, current);
-                            int progress = (int) (current * 100 / count);
-                            mUpdateInfoTV.setVisibility(View.VISIBLE);
-                            mUpdateInfoTV.setText("下载进度：" + progress + "%");
-                        }
-                    });
-
-
-                } else {
-                    Toast.makeText(getApplicationContext(), "请安装SD卡再试", Toast.LENGTH_SHORT);
-                }
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction("android.intent.action.VIEW");
+                intent.addCategory("android.intent.category.DEFAULT");
+                intent.setDataAndType(Uri.fromFile(new File(apkFile)), "application/vnd.android.package-archive");
+                startActivity(intent);
             }
         });
-        builder.setNegativeButton("下次再说", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                enterHome();
-            }
-        });
-        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                enterHome();
-                dialog.dismiss();
-            }
-        });
-        builder.show();
-    }
-
-    private void enterHome() {
-        Intent intent = new Intent(this, HomeActivity.class);
-        startActivity(intent);
-        finish();
     }
 
     private void checkUpdate() {
@@ -179,23 +129,24 @@ public class SplashActivity extends Activity {
             @Override
             public void run() {
                 long startTime = System.currentTimeMillis();
-                //联网获得版本信息
+
                 Message msg = Message.obtain();
                 try {
-                    URL url = new URL(getString(R.string.serverurl));
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-                    conn.setRequestMethod("GET");
-                    conn.setConnectTimeout(5 * 1000);
-                    int responseCode = conn.getResponseCode();
-                    if (responseCode == 200) {
-                        InputStream is = conn.getInputStream();
-                        String result = StreamTools.readFromStream(is);
-                        Log.i(TAG, "联网成功" + result);
-
-                        JSONObject jsonObj = new JSONObject(result);
-                        String version = (String) jsonObj.get("version");
-                        description = (String) jsonObj.get("description");
-                        apkurl = (String) jsonObj.get("apkurl");
+                    //联网获得版本信息
+                    URL apkUrl = new URL(getString(R.string.serverurl));
+                    HttpURLConnection connection = (HttpURLConnection) apkUrl.openConnection();
+                    connection.setRequestMethod("GET");
+                    connection.setConnectTimeout(10 * 1000);
+                    connection.setReadTimeout(5*1000);
+                    int responseCode = connection.getResponseCode();
+                    if (responseCode/100 == 2) {
+                        InputStream is = connection.getInputStream();
+                        String jsonStr = StreamTools.readFromStream(is);
+                        Log.i(TAG, "获取版本更新信息成功" + jsonStr);
+                        JSONObject json = new JSONObject(jsonStr);
+                        String version = (String) json.get("version");
+                        description = (String) json.get("description");
+                        apkurl = (String) json.get("apkurl");
 
                         //检查是否有新版本
                         if (getVersionName().equals(version)) {
@@ -228,6 +179,79 @@ public class SplashActivity extends Activity {
             }
         }).start();
     }
+
+    private void showUpdateDialog() {
+        //弹出对话框，左取消，右升级
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("请升级");
+        builder.setMessage(description);
+        //对话框被取消后也进入主页面
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                dialog.dismiss();
+                enterHome();
+            }
+        });
+
+        builder.setNegativeButton("下次再说", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                enterHome();
+            }
+        });
+
+        builder.setPositiveButton("立刻升级", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //要有SD卡存在才，下载Apk并替换安装
+                if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                    FinalHttp finalHttp = new FinalHttp();
+                    apkFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + (new File(apkurl)).getName();
+                    finalHttp.download(apkurl, apkFile, new AjaxCallBack<File>() {
+                        @Override
+                        public void onSuccess(File file) {
+                            super.onSuccess(file);
+                            //下载成功则安装APK
+                            Intent intent = new Intent();
+                            intent.setAction("android.intent.action.VIEW");
+                            intent.addCategory("android.intent.category.DEFAULT");
+                            intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+                            startActivity(intent);
+                            mOpenUpdatePackageBTN.setVisibility(View.VISIBLE);
+                        }
+                        @Override
+                        public void onFailure(Throwable t, int errorNo, String strMsg) {
+                            t.printStackTrace();
+                            //下载失败提示用户
+                            Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_LONG).show();
+                            super.onFailure(t, errorNo, strMsg);
+                        }
+                        @Override
+                        public void onLoading(long count, long current) {
+                            super.onLoading(count, current);
+                            int progress = (int) (current * 100 / count);
+                            mUpdateProgressTV.setVisibility(View.VISIBLE);
+                            mUpdateProgressPB.setVisibility(View.VISIBLE);
+                            mUpdateProgressPB.setProgress(progress);
+                        }
+                    });
+                } else {
+                    Toast.makeText(getApplicationContext(), "请插入SD卡再进行升级", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        builder.show();
+    }
+
+    private void enterHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+
 
     /**
      * 获得App版本名称

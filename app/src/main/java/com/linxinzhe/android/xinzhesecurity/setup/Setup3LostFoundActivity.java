@@ -1,49 +1,93 @@
 package com.linxinzhe.android.xinzhesecurity.setup;
 
+import android.app.admin.DevicePolicyManager;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import com.linxinzhe.android.xinzhesecurity.LostFoundActivity;
 import com.linxinzhe.android.xinzhesecurity.R;
+import com.linxinzhe.android.xinzhesecurity.receiver.MyAdminReceiver;
 
 public class Setup3LostFoundActivity extends BaseSetupActivity {
 
-    private EditText mSetupPhoneET;
+    private CheckBox mProtectingCB;
+
+    private DevicePolicyManager dpm;
+    private Button mOpenAdminBTN;
+    private Button mCloseAdminBTN;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup3_lost_found);
-        mSetupPhoneET= (EditText) findViewById(R.id.et_setup_phone);
-        //回显号码
-        mSetupPhoneET.setText(sp.getString("safenumber",""));
 
-    }
+        mProtectingCB= (CheckBox) findViewById(R.id.cb_protecting);
+        mProtectingCB.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked){
+                    mProtectingCB.setText("开启防盗保护");
+                }else{
+                    mProtectingCB.setText("未开启防盗保护");
+                }
+                SharedPreferences.Editor editor = sp.edit();
+                editor.putBoolean("protecting",isChecked);
+                editor.commit();
+            }
+        });
+        if(sp.getBoolean("protecting",false)){
+            mProtectingCB.setText("开启防盗保护");
+            mProtectingCB.setChecked(true);
+        }else {
+            mProtectingCB.setText("未开启防盗保护");
+            mProtectingCB.setChecked(false);
+        }
 
-    public void selectContact(View view) {
-        Intent intent = new Intent(this, SelectContactActivity.class);
-        startActivityForResult(intent, 0);
+        //配置远程控制权限
+        mOpenAdminBTN= (Button) findViewById(R.id.btn_openAdim);
+        mOpenAdminBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(DevicePolicyManager.ACTION_ADD_DEVICE_ADMIN);
+                ComponentName mDeviceAdminSample=new ComponentName(Setup3LostFoundActivity.this,MyAdminReceiver.class);
+                intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN, mDeviceAdminSample);
+                intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,"开启后可以远程锁屏和远程销毁数据");
+                startActivity(intent);
+                v.setVisibility(View.INVISIBLE);
+                mCloseAdminBTN.setVisibility(View.VISIBLE);
+            }
+        });
+        mCloseAdminBTN= (Button) findViewById(R.id.btn_closeAdim);
+        mCloseAdminBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ComponentName who=new ComponentName(Setup3LostFoundActivity.this,MyAdminReceiver.class);
+                dpm = (DevicePolicyManager) Setup3LostFoundActivity.this.getSystemService(Setup3LostFoundActivity.this.DEVICE_POLICY_SERVICE);
+                dpm.removeActiveAdmin(who);
+                v.setVisibility(View.INVISIBLE);
+                mOpenAdminBTN.setVisibility(View.VISIBLE);
+                Toast.makeText(Setup3LostFoundActivity.this, "远程控制权限已关闭", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
     public void goNextSetup() {
-        String phone = mSetupPhoneET.getText().toString().trim();
-        if (TextUtils.isEmpty(phone)){
-            Toast.makeText(this,"请设置安全号码",Toast.LENGTH_LONG).show();
-            return;
-        }
-        SharedPreferences.Editor editor=sp.edit();
-        editor.putString("safenumber",phone);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putBoolean("configed", true);
         editor.commit();
 
-        Intent intent = new Intent(this, Setup4LostFoundActivity.class);
+        Intent intent = new Intent(this, LostFoundActivity.class);
         startActivity(intent);
         finish();
-        overridePendingTransition(R.anim.tran_in, R.anim.tran_out);
+        overridePendingTransition(R.anim.tran_next_in, R.anim.tran_next_out);
     }
 
     @Override
@@ -52,15 +96,5 @@ public class Setup3LostFoundActivity extends BaseSetupActivity {
         startActivity(intent);
         finish();
         overridePendingTransition(R.anim.tran_prev_in, R.anim.tran_prev_out);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (data==null){
-            return;
-        }
-        String phone = data.getStringExtra("phone").replace("-", "");
-        mSetupPhoneET.setText(phone);
     }
 }
