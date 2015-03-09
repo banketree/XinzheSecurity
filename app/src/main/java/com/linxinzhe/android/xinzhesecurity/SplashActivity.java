@@ -28,6 +28,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -122,6 +123,33 @@ public class SplashActivity extends Activity {
                 startActivity(intent);
             }
         });
+
+        //初始化归属地数据库
+        initPhoneAddressDatabase();
+    }
+
+    private void initPhoneAddressDatabase() {
+        InputStream is = null;
+        FileOutputStream fos = null;
+        File dbPath = new File(getFilesDir(), "phone_address_mi.db");
+        if (dbPath.exists() && dbPath.length() > 0) {
+            Log.d(TAG,"无需初始化数据库");
+            return;
+        }else {
+            try {
+                is = getAssets().open("phone_address_mi.db");
+                fos = new FileOutputStream(dbPath);
+                byte[] buffer = new byte[1024];
+                int len = 0;
+                while ((len = is.read(buffer)) != -1) {
+                    fos.write(buffer, 0, len);
+                }
+                is.close();
+                fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     private void checkUpdate() {

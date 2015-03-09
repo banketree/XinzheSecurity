@@ -19,6 +19,7 @@ public class Setup1LostFoundActivity extends BaseSetupActivity {
         Intent intent = new Intent(this, Setup2LostFoundActivity.class);
         startActivity(intent);
         finish();
+        //滑屏动画效果
         overridePendingTransition(R.anim.tran_next_in, R.anim.tran_next_out);
     }
 

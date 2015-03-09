@@ -23,8 +23,8 @@ public class Setup2LostFoundActivity extends BaseSetupActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup2_lost_found);
+        //sim卡变动功能
         tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-
         mSimLockSIV = (SettingItemView) findViewById(R.id.siv_sim_lock);
         if (TextUtils.isEmpty(sp.getString("sim", null))) {
             mSimLockSIV.setChecked(false);
@@ -40,6 +40,7 @@ public class Setup2LostFoundActivity extends BaseSetupActivity {
                     editor.putString("sim", null);
                 } else {
                     mSimLockSIV.setChecked(true);
+                    //查询本机sim卡
                     String sim = tm.getSimSerialNumber();
                     editor.putString("sim", sim);
                 }
@@ -47,9 +48,8 @@ public class Setup2LostFoundActivity extends BaseSetupActivity {
             }
         });
 
-        //原3
-        mSetupPhoneET = (EditText) findViewById(R.id.et_setup_phone);
         //回显号码
+        mSetupPhoneET = (EditText) findViewById(R.id.et_setup_phone);
         mSetupPhoneET.setText(sp.getString("safenumber", ""));
     }
 
@@ -62,12 +62,13 @@ public class Setup2LostFoundActivity extends BaseSetupActivity {
             return;
         }
 
-        //原3
+        //设置安全号码才能下一步
         String phone = mSetupPhoneET.getText().toString().trim();
         if (TextUtils.isEmpty(phone)) {
             Toast.makeText(this, "请设置安全号码", Toast.LENGTH_LONG).show();
             return;
         }
+        //保存安全号码
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("safenumber", phone);
         editor.commit();
@@ -86,7 +87,7 @@ public class Setup2LostFoundActivity extends BaseSetupActivity {
         overridePendingTransition(R.anim.tran_prev_in, R.anim.tran_prev_out);
     }
 
-    //原3
+
     public void selectContact(View view) {
         Intent intent = new Intent(this, SelectContactActivity.class);
         startActivityForResult(intent, 0);

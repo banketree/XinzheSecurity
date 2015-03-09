@@ -12,8 +12,8 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
-
+    <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -94,14 +94,49 @@
             android:exported="true" >
         </service>
 
-        <receiver android:name=".receiver.MyAdminReceiver"
-            android:label="@string/xinzhesecurity_device_admin"
+        <receiver
+            android:name=".receiver.MyAdminReceiver"
             android:description="@string/xinzhesecurity_device_admin_description"
-            android:permission="android.permission.BIND_DEVICE_ADMIN">
-            <meta-data android:name="android.app.device_admin"
+            android:label="@string/xinzhesecurity_device_admin"
+            android:permission="android.permission.BIND_DEVICE_ADMIN" >
+            <meta-data
+                android:name="android.app.device_admin"
                 android:resource="@xml/device_admin_sample" />
+
             <intent-filter>
                 <action android:name="android.app.action.DEVICE_ADMIN_ENABLED" />
+            </intent-filter>
+        </receiver>
+
+        <activity
+            android:name=".MoreToolsActivity"
+            android:label="@string/title_activity_more_tools"
+            android:parentActivityName=".HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.linxinzhe.android.xinzhesecurity.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".MoreTools.PhoneAddressActivity"
+            android:label="@string/title_activity_phone_address"
+            android:parentActivityName=".MoreToolsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.linxinzhe.android.xinzhesecurity.MoreToolsActivity" />
+        </activity>
+
+        <service
+            android:name=".service.IncomingPhoneAddressService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+
+        <receiver
+            android:name=".receiver.OutgoingPhoneReceiver"
+            android:enabled="true"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.NEW_OUTGOING_CALL"/>
             </intent-filter>
         </receiver>
     </application>

@@ -51,12 +51,20 @@ public class HomeActivity extends ActionBarActivity {
         mListHomeGV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent=null;
                 switch (position) {
                     case 0:
                         showLostFindDialog();
                         break;
+
+                    //高级工具
+                    case 7:
+                        intent=new Intent(HomeActivity.this, MoreToolsActivity.class);
+                        startActivity(intent);
+                        break;
+                    //设置中心
                     case 8:
-                        Intent intent = new Intent(HomeActivity.this, SettingActivity.class);
+                        intent = new Intent(HomeActivity.this, SettingActivity.class);
                         startActivity(intent);
                         break;
                 }
