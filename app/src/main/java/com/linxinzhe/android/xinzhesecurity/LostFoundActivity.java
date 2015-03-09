@@ -29,7 +29,7 @@ public class LostFoundActivity extends ActionBarActivity {
         boolean configed = sp.getBoolean("configed", false);
         if (configed) {
             //设置过则直接进入
-            setContentView(R.layout.activity_lost_find);
+            setContentView(R.layout.activity_lost_found);
         } else {
             //若没则进入设置向导
             Intent intent = new Intent(this, Setup1LostFoundActivity.class);

@@ -6,6 +6,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.linxinzhe.android.xinzhesecurity.service.CallBlockService;
 import com.linxinzhe.android.xinzhesecurity.service.IncomingPhoneAddressService;
 import com.linxinzhe.android.xinzhesecurity.ui.SettingItemView;
 import com.linxinzhe.android.xinzhesecurity.utils.ServiceTools;
@@ -18,6 +19,9 @@ public class SettingActivity extends ActionBarActivity {
     private SettingItemView mUpdateSIV;
     private SettingItemView mIncomingPhoneAddressSIV;
 
+    private SettingItemView mCallBlockSTV;
+
+    private boolean isServiceRunning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +54,7 @@ public class SettingActivity extends ActionBarActivity {
         });
         //设置来电显示
         mIncomingPhoneAddressSIV = (SettingItemView) findViewById(R.id.siv_incoming_phone_address);
-        boolean isServiceRunning= ServiceTools.isExists(SettingActivity.this,"com.linxinzhe.android.xinzhesecurity.service.IncomingPhoneAddressService");
+        isServiceRunning = ServiceTools.isExists(SettingActivity.this,"com.linxinzhe.android.xinzhesecurity.service.IncomingPhoneAddressService");
         if (isServiceRunning){
             mIncomingPhoneAddressSIV.setChecked(true);
         }else {
@@ -68,6 +72,31 @@ public class SettingActivity extends ActionBarActivity {
                     mIncomingPhoneAddressSIV.setChecked(true);
                     startService(intent);
                 }
+            }
+        });
+
+        //黑名单拦截设置
+        mCallBlockSTV = (SettingItemView) findViewById(R.id.siv_call_block);
+        isServiceRunning= ServiceTools.isExists(SettingActivity.this,"com.linxinzhe.android.xinzhesecurity.service.CallBlockService");
+        if (isServiceRunning){
+            mCallBlockSTV.setChecked(true);
+        }else {
+            mCallBlockSTV.setChecked(false);
+        }
+        mCallBlockSTV.setOnClickListener(new View.OnClickListener() {
+            Intent  intent = new Intent(SettingActivity.this, CallBlockService.class);
+            @Override
+            public void onClick(View v) {
+                if (mCallBlockSTV.isChecked()) {
+                    // 变为非选中状态
+                    mCallBlockSTV.setChecked(false);
+                    stopService(intent);
+                } else {
+                    // 选择状态
+                    mCallBlockSTV.setChecked(true);
+                    startService(intent);
+                }
+
             }
         });
     }

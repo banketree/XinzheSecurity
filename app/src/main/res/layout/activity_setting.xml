@@ -25,4 +25,13 @@
         linxinzhe:desc_off="来电显示已经关闭"
         linxinzhe:desc_on="来电显示已经启动"
         linxinzhe:title="设置来电显示" />
+
+    <com.linxinzhe.android.xinzhesecurity.ui.SettingItemView
+        android:id="@+id/siv_call_block"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        linxinzhe:desc_off="骚扰拦截已经关闭"
+        linxinzhe:desc_on="骚扰拦截已经开启"
+        linxinzhe:title="骚扰拦截设置" >
+    </com.linxinzhe.android.xinzhesecurity.ui.SettingItemView>
 </LinearLayout>

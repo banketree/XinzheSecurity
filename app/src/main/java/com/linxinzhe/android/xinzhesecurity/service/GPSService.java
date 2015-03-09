@@ -63,17 +63,17 @@ public class GPSService extends Service {
 
         @Override
         public void onLocationChanged(Location location) {
-            String longitude = "longitude:" + location.getLongitude() + "\n";
-            String latitude = "latitude:" + location.getLatitude() + "\n";
-            String accuracy = "accuracy:" + location.getAccuracy() + "\n";
+            String longitude = "经度:" + location.getLongitude() + "\n";
+            String latitude = "纬度:" + location.getLatitude() + "\n";
+            String accuracy = "精度:" + location.getAccuracy() + "\n";
 
             //标准GPS转换成火星坐标
             try {
                 InputStream is = getAssets().open("axisoffset.dat");
                 ModifyOffset offset = ModifyOffset.getInstance(is);
                 PointDouble pointDouble = offset.s2c(new PointDouble(location.getLongitude(), location.getLatitude()));
-                longitude = "longitude:" + pointDouble.x + "\n";
-                latitude = "latitude:" + pointDouble.y + "\n";
+                longitude = "经度:" + pointDouble.x + "\n";
+                latitude = "纬度:" + pointDouble.y + "\n";
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (Exception e) {
@@ -107,17 +107,17 @@ public class GPSService extends Service {
 
         @Override
         public void onLocationChanged(Location location) {
-            String longitude = "longitude:" + location.getLongitude() + "\n";
-            String latitude = "latitude:" + location.getLatitude() + "\n";
-            String accuracy = "accuracy:" + location.getAccuracy() + "\n";
+            String longitude = "经度:" + location.getLongitude() + "\n";
+            String latitude = "纬度:" + location.getLatitude() + "\n";
+            String accuracy = "精度:" + location.getAccuracy() + "\n";
 
             //标准GPS转换成火星坐标
             try {
                 InputStream is = getAssets().open("axisoffset.dat");
                 ModifyOffset offset = ModifyOffset.getInstance(is);
                 PointDouble pointDouble = offset.s2c(new PointDouble(location.getLongitude(), location.getLatitude()));
-                longitude = "longitude:" + pointDouble.x + "\n";
-                latitude = "latitude:" + pointDouble.y + "\n";
+                longitude = "经度:" + pointDouble.x + "\n";
+                latitude = "纬度:" + pointDouble.y + "\n";
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (Exception e) {

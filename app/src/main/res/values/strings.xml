@@ -17,5 +17,6 @@
     <string name="xinzhesecurity_device_admin_description">获取系统高级权限</string>
     <string name="title_activity_more_tools">高级工具</string>
     <string name="title_activity_phone_address">电话归属地查询</string>
+    <string name="title_activity_call_block">骚扰拦截</string>
 
 </resources>

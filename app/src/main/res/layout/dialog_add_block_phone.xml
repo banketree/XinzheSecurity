@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dip"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:layout_width="300dip"
+        android:layout_height="50dip"
+        android:gravity="center"
+        android:text="添加拦截号码"
+        android:textColor="#000000"
+        android:textSize="22sp" />
+
+    <EditText
+        android:id="@+id/et_block_phone"
+        android:layout_width="280dip"
+        android:layout_height="wrap_content"
+        android:hint="请输入拦截号码"
+        android:inputType="phone" />
+
+    <LinearLayout
+        android:layout_width="300dip"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+
+        <CheckBox
+            android:id="@+id/cb_phone"
+            android:textColor="#000000"
+            android:layout_width="140dip"
+            android:layout_height="wrap_content"
+            android:text="电话拦截" />
+
+        <CheckBox
+            android:id="@+id/cb_sms"
+            android:textColor="#000000"
+            android:layout_width="140dip"
+            android:layout_height="wrap_content"
+            android:text="短信拦截" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="300dip"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal" >
+        <Button
+            android:id="@+id/cancel"
+            android:layout_width="140dip"
+            android:layout_height="wrap_content"
+            android:text="取消" />
+        <Button
+            android:id="@+id/ok"
+            android:layout_width="140dip"
+            android:layout_height="wrap_content"
+            android:text="确定" />
+
+
+    </LinearLayout>
+
+</LinearLayout>

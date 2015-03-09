@@ -29,7 +29,7 @@ public class HomeActivity extends ActionBarActivity {
 
     private static String[] names = {
             "手机防盗", "手机杀毒", "手机优化",
-            "通讯密保", "软件管理", "内存管理",
+            "骚扰拦截", "软件管理", "内存管理",
             "流量统计", "高级工具", "设置中心"
     };
     private static int[] icons = {
@@ -56,7 +56,11 @@ public class HomeActivity extends ActionBarActivity {
                     case 0:
                         showLostFindDialog();
                         break;
-
+                    //拦截骚扰
+                    case 3:
+                        intent=new Intent(HomeActivity.this,CallBlockActivity.class);
+                        startActivity(intent);
+                        break;
                     //高级工具
                     case 7:
                         intent=new Intent(HomeActivity.this, MoreToolsActivity.class);

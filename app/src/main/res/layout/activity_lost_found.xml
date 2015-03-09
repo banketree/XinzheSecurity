@@ -90,17 +90,17 @@
         style="@style/TextContent"
         android:layout_width="match_parent"
         android:background="#66000000"
-        android:text="功能简介" />
+        android:text="短信命令" />
 
     <TextView
         style="@style/TextContent"
         android:drawableLeft="@mipmap/ic_sms_black_18dp"
-        android:text="GPS定位:#*定位*#" />
+        android:text="GPS定位:dingwei#" />
 
     <TextView
         style="@style/TextContent"
         android:drawableLeft="@mipmap/ic_sms_black_18dp"
-        android:text="警报声音：#*警报*#" />
+        android:text="警报声音：jingbao#" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -109,7 +109,7 @@
         <TextView
             style="@style/TextContent"
             android:drawableLeft="@mipmap/ic_sms_black_18dp"
-            android:text="锁死屏幕:#*锁死*#" />
+            android:text="锁死屏幕:suoding#" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
     <TextView
         style="@style/TextContent"
         android:drawableLeft="@mipmap/ic_sms_black_18dp"
-        android:text="数据销毁:#*销毁*#" />
+        android:text="数据销毁:shanchu#" />
 
 
     <LinearLayout
