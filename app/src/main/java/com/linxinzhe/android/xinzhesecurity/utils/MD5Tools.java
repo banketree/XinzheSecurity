@@ -3,10 +3,7 @@ package com.linxinzhe.android.xinzhesecurity.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/**
- * Created by linxinzhe on 2015/3/6.
- */
-public class MD5Utils {
+public class MD5Tools {
 
     /**
      * MD5加密

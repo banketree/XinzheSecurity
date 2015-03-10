@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.linxinzhe.android.xinzhesecurity.utils.MD5Utils;
+import com.linxinzhe.android.xinzhesecurity.utils.MD5Tools;
 
 
 public class HomeActivity extends ActionBarActivity {
@@ -115,7 +115,7 @@ public class HomeActivity extends ActionBarActivity {
                 if (password.equals(confirmPassword)) {
                     //保存密码
                     SharedPreferences.Editor editor = sp.edit();
-                    editor.putString("password", MD5Utils.encrypt(password));
+                    editor.putString("password", MD5Tools.encrypt(password));
                     editor.commit();
                     dialog.dismiss();
                     //进入手机防盗
@@ -156,7 +156,7 @@ public class HomeActivity extends ActionBarActivity {
                     return;
                 }
                 //验证密码
-                if (MD5Utils.encrypt(password).equals(savePassword)) {
+                if (MD5Tools.encrypt(password).equals(savePassword)) {
                     //进入手机防盗页面
                     dialog.dismiss();
                     Intent intent = new Intent(HomeActivity.this, LostFoundActivity.class);

@@ -10,8 +10,14 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.linxinzhe.android.xinzhesecurity.MoreTools.PhoneAddressActivity;
+import com.linxinzhe.android.xinzhesecurity.utils.SmsTools;
+
+import org.xmlpull.v1.XmlPullParserException;
+
+import java.io.IOException;
 
 
 public class MoreToolsActivity extends ActionBarActivity {
@@ -19,8 +25,8 @@ public class MoreToolsActivity extends ActionBarActivity {
     private MyAdapter mAdapter;
 
     private static String[] names = {
-            "归属地查询", "手机杀毒",
-            "手机优化","通讯密保",
+            "归属地查询", "短信备份",
+            "短信还原","通讯密保",
     };
     private static int[] icons = {
             R.mipmap.ic_screen_lock_portrait_black_48dp, R.mipmap.ic_security_black_48dp,
@@ -43,9 +49,26 @@ public class MoreToolsActivity extends ActionBarActivity {
                         intent=new Intent(MoreToolsActivity.this, PhoneAddressActivity.class);
                         startActivity(intent);
                         break;
-
                     case 1:
-
+                        try {
+                            SmsTools.backupSms(MoreToolsActivity.this);
+                            Toast.makeText(MoreToolsActivity.this,"短信备份成功！",Toast.LENGTH_SHORT).show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Toast.makeText(MoreToolsActivity.this,"短信备份失败！",Toast.LENGTH_SHORT).show();
+                        }
+                        break;
+                    case 2:
+                        try {
+                            SmsTools.restoreSms(MoreToolsActivity.this,true);
+                            Toast.makeText(MoreToolsActivity.this,"短信还原成功！",Toast.LENGTH_SHORT).show();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Toast.makeText(MoreToolsActivity.this,"短信还原失败！",Toast.LENGTH_SHORT).show();
+                        } catch (XmlPullParserException e) {
+                            e.printStackTrace();
+                            Toast.makeText(MoreToolsActivity.this,"短信还原失败！",Toast.LENGTH_SHORT).show();
+                        }
                         break;
                 }
             }
