@@ -2,6 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.linxinzhe.android.xinzhesecurity.CallBlockActivity">
-    <item android:id="@+id/action_settings" android:title="添加拦截号码"
+    <item android:id="@+id/open_block" android:title="关闭拦截"
         android:orderInCategory="100" app:showAsAction="always" />
+    <item android:id="@+id/add_phone" android:title="添加号码"
+        android:orderInCategory="100" app:showAsAction="always" />
+
 </menu>

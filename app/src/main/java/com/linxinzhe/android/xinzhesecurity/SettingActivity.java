@@ -52,53 +52,53 @@ public class SettingActivity extends ActionBarActivity {
                 editor.commit();
             }
         });
-        //设置来电显示
-        mIncomingPhoneAddressSIV = (SettingItemView) findViewById(R.id.siv_incoming_phone_address);
-        isServiceRunning = ServiceTools.isExists(SettingActivity.this,"com.linxinzhe.android.xinzhesecurity.service.IncomingPhoneAddressService");
-        if (isServiceRunning){
-            mIncomingPhoneAddressSIV.setChecked(true);
-        }else {
-            mIncomingPhoneAddressSIV.setChecked(false);
-        }
-        mIncomingPhoneAddressSIV.setOnClickListener(new View.OnClickListener() {
+//        //设置来电显示
+//        mIncomingPhoneAddressSIV = (SettingItemView) findViewById(R.id.siv_incoming_phone_address);
+//        isServiceRunning = ServiceTools.isExists(SettingActivity.this,"com.linxinzhe.android.xinzhesecurity.service.IncomingPhoneAddressService");
+//        if (isServiceRunning){
+//            mIncomingPhoneAddressSIV.setChecked(true);
+//        }else {
+//            mIncomingPhoneAddressSIV.setChecked(false);
+//        }
+//        mIncomingPhoneAddressSIV.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(SettingActivity.this, IncomingPhoneAddressService.class);
+//                if (mIncomingPhoneAddressSIV.isChecked()) {
+//                    mIncomingPhoneAddressSIV.setChecked(false);
+//                    stopService(intent);
+//                } else {
+//                    mIncomingPhoneAddressSIV.setChecked(true);
+//                    startService(intent);
+//                }
+//            }
+//        });
 
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(SettingActivity.this, IncomingPhoneAddressService.class);
-                if (mIncomingPhoneAddressSIV.isChecked()) {
-                    mIncomingPhoneAddressSIV.setChecked(false);
-                    stopService(intent);
-                } else {
-                    mIncomingPhoneAddressSIV.setChecked(true);
-                    startService(intent);
-                }
-            }
-        });
-
-        //黑名单拦截设置
-        mCallBlockSTV = (SettingItemView) findViewById(R.id.siv_call_block);
-        isServiceRunning= ServiceTools.isExists(SettingActivity.this,"com.linxinzhe.android.xinzhesecurity.service.CallBlockService");
-        if (isServiceRunning){
-            mCallBlockSTV.setChecked(true);
-        }else {
-            mCallBlockSTV.setChecked(false);
-        }
-        mCallBlockSTV.setOnClickListener(new View.OnClickListener() {
-            Intent  intent = new Intent(SettingActivity.this, CallBlockService.class);
-            @Override
-            public void onClick(View v) {
-                if (mCallBlockSTV.isChecked()) {
-                    // 变为非选中状态
-                    mCallBlockSTV.setChecked(false);
-                    stopService(intent);
-                } else {
-                    // 选择状态
-                    mCallBlockSTV.setChecked(true);
-                    startService(intent);
-                }
-
-            }
-        });
+//        //黑名单拦截设置
+//        mCallBlockSTV = (SettingItemView) findViewById(R.id.siv_call_block);
+//        isServiceRunning= ServiceTools.isExists(SettingActivity.this,"com.linxinzhe.android.xinzhesecurity.service.CallBlockService");
+//        if (isServiceRunning){
+//            mCallBlockSTV.setChecked(true);
+//        }else {
+//            mCallBlockSTV.setChecked(false);
+//        }
+//        mCallBlockSTV.setOnClickListener(new View.OnClickListener() {
+//            Intent  intent = new Intent(SettingActivity.this, CallBlockService.class);
+//            @Override
+//            public void onClick(View v) {
+//                if (mCallBlockSTV.isChecked()) {
+//                    // 变为非选中状态
+//                    mCallBlockSTV.setChecked(false);
+//                    stopService(intent);
+//                } else {
+//                    // 选择状态
+//                    mCallBlockSTV.setChecked(true);
+//                    startService(intent);
+//                }
+//
+//            }
+//        });
     }
 
 }

@@ -22,7 +22,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="20sp"
-        android:text="拦截功能尚未开启，请到设置中心开启"
+        android:text="拦截功能尚未开启，点我开启"
         android:visibility="gone"/>
 
     <ListView

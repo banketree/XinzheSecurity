@@ -2,6 +2,7 @@ package com.linxinzhe.android.xinzhesecurity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import com.linxinzhe.android.xinzhesecurity.db.CallBlockDao;
 import com.linxinzhe.android.xinzhesecurity.domain.CallBlockInfo;
+import com.linxinzhe.android.xinzhesecurity.service.CallBlockService;
 import com.linxinzhe.android.xinzhesecurity.utils.ServiceTools;
 
 import java.util.List;
@@ -143,10 +145,22 @@ public class CallBlockActivity extends ActionBarActivity {
     public void addBlackNumber(View view){
 
     }
+
+    private Menu menu = null;
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_call_block, menu);
+        if (menu!=null){
+            this.menu=menu;
+            boolean isServiceRunning= ServiceTools.isExists(CallBlockActivity.this, "com.linxinzhe.android.xinzhesecurity.service.CallBlockService");
+            if (isServiceRunning){
+                menu.findItem(R.id.open_block).setTitle("关闭拦截");
+            }else {
+                menu.findItem(R.id.open_block).setTitle("开启拦截");
+            }
+        }
+
         return true;
     }
 
@@ -158,7 +172,7 @@ public class CallBlockActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.add_phone) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             final AlertDialog dialog = builder.create();
             View contentView = View.inflate(this, R.layout.dialog_add_block_phone, null);
@@ -209,10 +223,21 @@ public class CallBlockActivity extends ActionBarActivity {
                     dialog.dismiss();
                 }
             });
-
+            return true;
+        }else if (id==R.id.open_block){
+            if (item.getTitle().equals("关闭拦截")) {
+                Intent intent = new Intent(CallBlockActivity.this, CallBlockService.class);
+                stopService(intent);
+                menu.findItem(id).setTitle("开启拦截");
+                mOpenReminderTV.setVisibility(View.VISIBLE);
+            }else if (item.getTitle().equals("开启拦截")){
+                Intent intent = new Intent(CallBlockActivity.this, CallBlockService.class);
+                startService(intent);
+                menu.findItem(id).setTitle("关闭拦截");
+                mOpenReminderTV.setVisibility(View.GONE);
+            }
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

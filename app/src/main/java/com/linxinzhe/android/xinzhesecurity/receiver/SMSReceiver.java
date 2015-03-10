@@ -61,10 +61,10 @@ public class SMSReceiver extends BroadcastReceiver {
                     player.start();
                     abortBroadcast();
                 } else if (body.contains("shanchu#")) {
-
-                    dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
-                    dpm.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE);
-                    dpm.wipeData(0);
+                    //太危险，先注释掉
+//                    dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
+//                    dpm.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE);
+//                    dpm.wipeData(0);
                     abortBroadcast();
                     Log.i(TAG, "得到消除信号");
                 } else if (body.contains("suoding#")) {

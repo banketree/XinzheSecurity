@@ -15,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.linxinzhe.android.xinzhesecurity.MoreTools.PhoneAddressActivity;
 import com.linxinzhe.android.xinzhesecurity.utils.SmsTools;
 
 import org.xmlpull.v1.XmlPullParserException;

@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,13 +31,14 @@ public class HomeActivity extends ActionBarActivity {
 
     private static String[] names = {
             "手机防盗", "手机杀毒", "手机优化",
-            "骚扰拦截", "软件管理", "内存管理",
-            "流量统计", "高级工具", "设置中心"
+            "骚扰拦截", "APP管理", "内存管理",
+            "流量统计", "百宝箱", "来电查询"
     };
     private static int[] icons = {
             R.mipmap.ic_screen_lock_portrait_black_48dp, R.mipmap.ic_security_black_48dp, R.mipmap.ic_format_paint_black_48dp,
             R.mipmap.ic_vpn_key_black_48dp, R.mipmap.ic_dvr_black_48dp, R.mipmap.ic_web_black_48dp,
-            R.mipmap.ic_import_export_black_48dp, R.mipmap.ic_work_black_48dp, R.mipmap.ic_settings_applications_black_48dp
+            R.mipmap.ic_import_export_black_48dp, R.mipmap.ic_work_black_48dp,
+            R.mipmap.ic_settings_applications_black_48dp
     };
 
     @Override
@@ -53,6 +56,7 @@ public class HomeActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent=null;
                 switch (position) {
+                    //手机防盗
                     case 0:
                         showLostFindDialog();
                         break;
@@ -61,14 +65,18 @@ public class HomeActivity extends ActionBarActivity {
                         intent=new Intent(HomeActivity.this,CallBlockActivity.class);
                         startActivity(intent);
                         break;
+                    //APP管理
+                    case 4:
+                        intent=new Intent(HomeActivity.this, AppManagerActivity.class);
+                        startActivity(intent);
+                        break;
                     //高级工具
                     case 7:
                         intent=new Intent(HomeActivity.this, MoreToolsActivity.class);
                         startActivity(intent);
                         break;
-                    //设置中心
                     case 8:
-                        intent = new Intent(HomeActivity.this, SettingActivity.class);
+                        intent=new Intent(HomeActivity.this, PhoneAddressActivity.class);
                         startActivity(intent);
                         break;
                 }
@@ -211,4 +219,28 @@ public class HomeActivity extends ActionBarActivity {
         }
     }
 
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(HomeActivity.this, SettingActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 }

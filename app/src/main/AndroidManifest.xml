@@ -16,7 +16,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -121,7 +121,7 @@
                 android:value="com.linxinzhe.android.xinzhesecurity.HomeActivity" />
         </activity>
         <activity
-            android:name=".MoreTools.PhoneAddressActivity"
+            android:name=".PhoneAddressActivity"
             android:label="@string/title_activity_phone_address"
             android:parentActivityName=".MoreToolsActivity" >
             <meta-data
@@ -158,6 +158,15 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+
+        <activity
+            android:name=".AppManagerActivity"
+            android:label="@string/title_activity_app_manager"
+            android:parentActivityName=".HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.linxinzhe.android.xinzhesecurity.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>

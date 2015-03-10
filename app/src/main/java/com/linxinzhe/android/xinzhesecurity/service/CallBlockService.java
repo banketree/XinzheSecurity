@@ -13,7 +13,7 @@ import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import com.linxinzhe.android.xinzhesecurity.ITelephony;
+import com.android.internal.telephony.ITelephony;
 import com.linxinzhe.android.xinzhesecurity.db.CallBlockDao;
 
 import java.lang.reflect.Method;
