@@ -1,6 +1,9 @@
 package com.linxinzhe.android.xinzhesecurity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +20,7 @@ import com.linxinzhe.android.xinzhesecurity.utils.SmsTools;
 
 import org.xmlpull.v1.XmlPullParserException;
 
+import java.io.File;
 import java.io.IOException;
 
 
@@ -46,29 +50,44 @@ public class MoreToolsActivity extends ActionBarActivity {
                 Intent intent=null;
                 switch (position) {
                     case 0:
-                        intent=new Intent(MoreToolsActivity.this, PhoneAddressActivity.class);
+                        intent = new Intent(MoreToolsActivity.this, PhoneAddressActivity.class);
                         startActivity(intent);
                         break;
                     case 1:
                         try {
                             SmsTools.backupSms(MoreToolsActivity.this);
-                            Toast.makeText(MoreToolsActivity.this,"短信备份成功！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MoreToolsActivity.this, "短信备份成功！", Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
                             e.printStackTrace();
-                            Toast.makeText(MoreToolsActivity.this,"短信备份失败！",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MoreToolsActivity.this, "短信备份失败！", Toast.LENGTH_SHORT).show();
                         }
                         break;
                     case 2:
-                        try {
-                            SmsTools.restoreSms(MoreToolsActivity.this,true);
-                            Toast.makeText(MoreToolsActivity.this,"短信还原成功！",Toast.LENGTH_SHORT).show();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                            Toast.makeText(MoreToolsActivity.this,"短信还原失败！",Toast.LENGTH_SHORT).show();
-                        } catch (XmlPullParserException e) {
-                            e.printStackTrace();
-                            Toast.makeText(MoreToolsActivity.this,"短信还原失败！",Toast.LENGTH_SHORT).show();
-                        }
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MoreToolsActivity.this);
+                        builder.setTitle("警告");
+                        builder.setMessage("还原将把短信恢复到您上次备份时的情况（若短信较多，请耐心等待）");
+                        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                try {
+                                    File backUpSmsFile=new File(Environment.getExternalStorageDirectory(), "backupSms.xml");
+                                    if (backUpSmsFile.exists()&&backUpSmsFile.length()>0) {
+                                        SmsTools.restoreSms(MoreToolsActivity.this, true);
+                                        Toast.makeText(MoreToolsActivity.this, "短信还原成功！", Toast.LENGTH_SHORT).show();
+                                    }else {
+                                        Toast.makeText(MoreToolsActivity.this, "您从未备份过！", Toast.LENGTH_SHORT).show();
+                                    }
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(MoreToolsActivity.this, "短信还原失败！", Toast.LENGTH_SHORT).show();
+                                } catch (XmlPullParserException e) {
+                                    e.printStackTrace();
+                                    Toast.makeText(MoreToolsActivity.this, "短信还原失败！", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
+                        builder.setNegativeButton("取消", null);
+                        builder.show();
                         break;
                 }
             }
