@@ -1,15 +1,11 @@
 package com.linxinzhe.android.xinzhesecurity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.linxinzhe.android.xinzhesecurity.service.CallBlockService;
-import com.linxinzhe.android.xinzhesecurity.service.IncomingPhoneAddressService;
 import com.linxinzhe.android.xinzhesecurity.ui.SettingItemView;
-import com.linxinzhe.android.xinzhesecurity.utils.ServiceTools;
 
 
 public class SettingActivity extends ActionBarActivity {
@@ -77,14 +73,14 @@ public class SettingActivity extends ActionBarActivity {
 
 //        //黑名单拦截设置
 //        mCallBlockSTV = (SettingItemView) findViewById(R.id.siv_call_block);
-//        isServiceRunning= ServiceTools.isExists(SettingActivity.this,"com.linxinzhe.android.xinzhesecurity.service.CallBlockService");
+//        isServiceRunning= ServiceTools.isExists(SettingActivity.this,"com.linxinzhe.android.xinzhesecurity.service.BlockCallService");
 //        if (isServiceRunning){
 //            mCallBlockSTV.setChecked(true);
 //        }else {
 //            mCallBlockSTV.setChecked(false);
 //        }
 //        mCallBlockSTV.setOnClickListener(new View.OnClickListener() {
-//            Intent  intent = new Intent(SettingActivity.this, CallBlockService.class);
+//            Intent  intent = new Intent(SettingActivity.this, BlockCallService.class);
 //            @Override
 //            public void onClick(View v) {
 //                if (mCallBlockSTV.isChecked()) {

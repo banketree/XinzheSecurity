@@ -18,7 +18,7 @@ import com.linxinzhe.android.xinzhesecurity.db.CallBlockDao;
 
 import java.lang.reflect.Method;
 
-public class CallBlockService extends Service {
+public class BlockCallService extends Service {
     public static final String TAG = "CallSmsSafeService";
     private InnerSmsReceiver receiver;
     private CallBlockDao dao;
@@ -93,7 +93,7 @@ public class CallBlockService extends Service {
         //IBinder iBinder = ServiceManager.getService(TELEPHONY_SERVICE);
         try {
             //加载servicemanager的字节码
-            Class clazz = CallBlockService.class.getClassLoader().loadClass("android.os.ServiceManager");
+            Class clazz = BlockCallService.class.getClassLoader().loadClass("android.os.ServiceManager");
             Method method = clazz.getDeclaredMethod("getService", String.class);
             IBinder ibinder = (IBinder) method.invoke(null, TELEPHONY_SERVICE);
             ITelephony.Stub.asInterface(ibinder).endCall();

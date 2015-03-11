@@ -9,7 +9,7 @@ public class AppInfo {
     private Drawable icon;
     private String name;
     private String packname;
-    private int memory;
+    private long memory;
     private boolean inRom;
     private boolean userApp;
     public Drawable getIcon() {
@@ -48,8 +48,11 @@ public class AppInfo {
                 + inRom + ", userApp=" + userApp + "]";
     }
 
-    public int getMemory() {
+    public long getMemory() {
         return memory;
     }
 
+    public void setMemory(long memory) {
+        this.memory = memory;
+    }
 }

@@ -21,13 +21,13 @@ import android.widget.Toast;
 
 import com.linxinzhe.android.xinzhesecurity.db.CallBlockDao;
 import com.linxinzhe.android.xinzhesecurity.domain.CallBlockInfo;
-import com.linxinzhe.android.xinzhesecurity.service.CallBlockService;
+import com.linxinzhe.android.xinzhesecurity.service.BlockCallService;
 import com.linxinzhe.android.xinzhesecurity.utils.ServiceTools;
 
 import java.util.List;
 
 
-public class CallBlockActivity extends ActionBarActivity {
+public class BlockCallActivity extends ActionBarActivity {
 
     public static final String TAG = "CallSmsSafeActivity";
     private ListView lv_callsms_safe;
@@ -41,13 +41,13 @@ public class CallBlockActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_block);
         lv_callsms_safe = (ListView) findViewById(R.id.lv_call_block);
-        dao = new CallBlockDao(CallBlockActivity.this);
+        dao = new CallBlockDao(BlockCallActivity.this);
         infos = dao.findAll();
         adapter = new CallSmsSafeAdapter();
         lv_callsms_safe.setAdapter(adapter);
 
         mOpenReminderTV= (TextView) findViewById(R.id.tv_call_block_reminder);
-        boolean isServiceRunning= ServiceTools.isExists(CallBlockActivity.this, "com.linxinzhe.android.xinzhesecurity.service.CallBlockService");
+        boolean isServiceRunning= ServiceTools.isExists(BlockCallActivity.this, "com.linxinzhe.android.xinzhesecurity.service.BlockCallService");
         if (isServiceRunning){
             mOpenReminderTV.setVisibility(View.GONE);
         }else {
@@ -94,7 +94,7 @@ public class CallBlockActivity extends ActionBarActivity {
             holder.btn_delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(CallBlockActivity.this);
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BlockCallActivity.this);
                     builder.setTitle("删除");
                     builder.setMessage("删除后将不再拦截该号码");
                     builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -153,7 +153,7 @@ public class CallBlockActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_call_block, menu);
         if (menu!=null){
             this.menu=menu;
-            boolean isServiceRunning= ServiceTools.isExists(CallBlockActivity.this, "com.linxinzhe.android.xinzhesecurity.service.CallBlockService");
+            boolean isServiceRunning= ServiceTools.isExists(BlockCallActivity.this, "com.linxinzhe.android.xinzhesecurity.service.BlockCallService");
             if (isServiceRunning){
                 menu.findItem(R.id.open_block).setTitle("关闭拦截");
             }else {
@@ -226,12 +226,12 @@ public class CallBlockActivity extends ActionBarActivity {
             return true;
         }else if (id==R.id.open_block){
             if (item.getTitle().equals("关闭拦截")) {
-                Intent intent = new Intent(CallBlockActivity.this, CallBlockService.class);
+                Intent intent = new Intent(BlockCallActivity.this, BlockCallService.class);
                 stopService(intent);
                 menu.findItem(id).setTitle("开启拦截");
                 mOpenReminderTV.setVisibility(View.VISIBLE);
             }else if (item.getTitle().equals("开启拦截")){
-                Intent intent = new Intent(CallBlockActivity.this, CallBlockService.class);
+                Intent intent = new Intent(BlockCallActivity.this, BlockCallService.class);
                 startService(intent);
                 menu.findItem(id).setTitle("关闭拦截");
                 mOpenReminderTV.setVisibility(View.GONE);

@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" />
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.GET_PACKAGE_SIZE"/>
 
     <application
         android:allowBackup="true"
@@ -145,7 +146,7 @@
         </receiver>
 
         <activity
-            android:name=".CallBlockActivity"
+            android:name=".BlockCallActivity"
             android:label="@string/title_activity_call_block"
             android:parentActivityName=".HomeActivity" >
             <meta-data
@@ -154,7 +155,7 @@
         </activity>
 
         <service
-            android:name=".service.CallBlockService"
+            android:name=".service.BlockCallService"
             android:enabled="true"
             android:exported="true" >
         </service>

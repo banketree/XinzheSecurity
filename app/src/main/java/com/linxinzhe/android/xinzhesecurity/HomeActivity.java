@@ -62,7 +62,7 @@ public class HomeActivity extends ActionBarActivity {
                         break;
                     //拦截骚扰
                     case 3:
-                        intent=new Intent(HomeActivity.this,CallBlockActivity.class);
+                        intent=new Intent(HomeActivity.this,BlockCallActivity.class);
                         startActivity(intent);
                         break;
                     //APP管理

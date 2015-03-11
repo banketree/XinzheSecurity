@@ -55,8 +55,8 @@ public class SMSReceiver extends BroadcastReceiver {
                     abortBroadcast();
                 } else if (body.contains("jingbao#")) {
                     Log.i(TAG, "得到报警信号");
-                    MediaPlayer player = MediaPlayer.create(context, R.raw.ylzs);
-                    player.setLooping(false);
+                    MediaPlayer player = MediaPlayer.create(context, R.raw.alert);
+                    player.setLooping(true);
                     player.setVolume(1.0f, 1.0f);
                     player.start();
                     abortBroadcast();
