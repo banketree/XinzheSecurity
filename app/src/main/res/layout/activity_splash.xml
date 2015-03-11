@@ -45,12 +45,18 @@
         <ProgressBar
             android:id="@+id/pb_update_progress"
             style="?android:attr/progressBarStyleHorizontal"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:max="100"
+            android:layout_weight="1"
             android:visibility="invisible" />
 
-
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:visibility="invisible"/>
     </LinearLayout>
 
 </RelativeLayout>

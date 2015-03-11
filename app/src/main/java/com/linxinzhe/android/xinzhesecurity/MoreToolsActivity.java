@@ -28,12 +28,10 @@ public class MoreToolsActivity extends ActionBarActivity {
     private MyAdapter mAdapter;
 
     private static String[] names = {
-            "归属地查询", "短信备份",
-            "短信还原","通讯密保",
+             "短信备份","短信还原",
     };
     private static int[] icons = {
-            R.mipmap.ic_screen_lock_portrait_black_48dp, R.mipmap.ic_security_black_48dp,
-            R.mipmap.ic_format_paint_black_48dp,R.mipmap.ic_vpn_key_black_48dp,
+            R.mipmap.ic_cloud_upload_black_48dp, R.mipmap.ic_cloud_download_black_48dp,
     };
 
     @Override
@@ -49,10 +47,6 @@ public class MoreToolsActivity extends ActionBarActivity {
                 Intent intent=null;
                 switch (position) {
                     case 0:
-                        intent = new Intent(MoreToolsActivity.this, PhoneAddressActivity.class);
-                        startActivity(intent);
-                        break;
-                    case 1:
                         try {
                             SmsTools.backupSms(MoreToolsActivity.this);
                             Toast.makeText(MoreToolsActivity.this, "短信备份成功！", Toast.LENGTH_SHORT).show();
@@ -61,7 +55,7 @@ public class MoreToolsActivity extends ActionBarActivity {
                             Toast.makeText(MoreToolsActivity.this, "短信备份失败！", Toast.LENGTH_SHORT).show();
                         }
                         break;
-                    case 2:
+                    case 1:
                         AlertDialog.Builder builder = new AlertDialog.Builder(MoreToolsActivity.this);
                         builder.setTitle("警告");
                         builder.setMessage("还原将把短信恢复到您上次备份时的情况（若短信较多，请耐心等待）");

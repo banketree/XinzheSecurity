@@ -36,9 +36,8 @@ public class HomeActivity extends ActionBarActivity {
     };
     private static int[] icons = {
             R.mipmap.ic_screen_lock_portrait_black_48dp, R.mipmap.ic_security_black_48dp, R.mipmap.ic_format_paint_black_48dp,
-            R.mipmap.ic_vpn_key_black_48dp, R.mipmap.ic_dvr_black_48dp, R.mipmap.ic_web_black_48dp,
-            R.mipmap.ic_import_export_black_48dp, R.mipmap.ic_work_black_48dp,
-            R.mipmap.ic_settings_applications_black_48dp
+            R.mipmap.ic_phone_missed_black_48dp, R.mipmap.ic_dvr_black_48dp, R.mipmap.ic_web_black_48dp,
+            R.mipmap.ic_import_export_black_48dp, R.mipmap.ic_work_black_48dp,R.mipmap.ic_call_black_48dp
     };
 
     @Override
@@ -59,6 +58,11 @@ public class HomeActivity extends ActionBarActivity {
                     //手机防盗
                     case 0:
                         showLostFindDialog();
+                        break;
+                    //手机杀毒
+                    case 1:
+                        intent=new Intent(HomeActivity.this,AntivirusActivity.class);
+                        startActivity(intent);
                         break;
                     //拦截骚扰
                     case 3:

@@ -70,6 +70,8 @@ public class AppManagerActivity extends ActionBarActivity {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
+                } catch (PackageManager.NameNotFoundException e) {
+                    e.printStackTrace();
                 }
                 runOnUiThread(new Runnable() {
                     @Override
@@ -180,6 +182,8 @@ public class AppManagerActivity extends ActionBarActivity {
                 } catch (InvocationTargetException e) {
                     e.printStackTrace();
                 } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                } catch (PackageManager.NameNotFoundException e) {
                     e.printStackTrace();
                 }
                 runOnUiThread(new Runnable() {

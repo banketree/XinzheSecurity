@@ -8,9 +8,11 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
 import android.graphics.drawable.Drawable;
 import android.os.RemoteException;
+import android.util.Log;
 
 import com.linxinzhe.android.xinzhesecurity.domain.AppInfo;
 
+import java.io.File;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -25,11 +27,14 @@ public class AppInfoTools {
 
 //    private long totalsize ;
 
-    public List<AppInfo> getAppInfos(Context context) throws RemoteException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    public List<AppInfo> getAppInfos(Context context) throws RemoteException, NoSuchMethodException, InvocationTargetException, IllegalAccessException, PackageManager.NameNotFoundException {
         PackageManager pm = context.getPackageManager();
         //所有的安装在系统上的应用程序包信息。
         List<PackageInfo> packInfos = pm.getInstalledPackages(0);
         List<AppInfo> appInfos = new ArrayList<AppInfo>();
+
+        ApplicationInfo applicationInfo=null;
+        File file=null;
         for (PackageInfo packInfo : packInfos) {
             AppInfo appInfo = new AppInfo();
             //packInfo  相当于一个应用程序apk包的清单文件
@@ -41,6 +46,9 @@ public class AppInfoTools {
 //            getPackageSizeInfo.invoke(pm, packname,new PkgSizeObserver());
 //            long memory =totalsize;
 
+            applicationInfo = pm.getApplicationInfo(packname, 0);
+            file = new File(applicationInfo.sourceDir);
+            long memory = file.length();
 
             int flags = packInfo.applicationInfo.flags;//应用程序信息的标记 相当于用户提交的答卷
             if ((flags & ApplicationInfo.FLAG_SYSTEM) == 0) {
@@ -60,7 +68,7 @@ public class AppInfoTools {
             appInfo.setPackname(packname);
             appInfo.setIcon(icon);
             appInfo.setName(name);
-//            appInfo.setMemory(memory);
+            appInfo.setMemory(memory);
             if (appInfo.isUserApp()){
                 appInfos.add(0,appInfo);
             }else{

@@ -51,6 +51,7 @@ public class SplashActivity extends Activity {
 
     private TextView mUpdateProgressTV;
     private ProgressBar mUpdateProgressPB;
+    private Button mCancelBTN;
 
     private String apkFile;
     private Button mOpenUpdatePackageBTN;
@@ -123,21 +124,29 @@ public class SplashActivity extends Activity {
                 startActivity(intent);
             }
         });
+        mCancelBTN = (Button) findViewById(R.id.btn_cancel);
+        mCancelBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                enterHome();
+            }
+        });
 
         //初始化归属地数据库
-        initPhoneAddressDatabase();
+        initDatabase("antivirus_kingsoft.db");
+        initDatabase("phone_address_mi.db");
     }
 
-    private void initPhoneAddressDatabase() {
+    private void initDatabase(String dbPathStr) {
         InputStream is = null;
         FileOutputStream fos = null;
-        File dbPath = new File(getFilesDir(), "phone_address_mi.db");
+        File dbPath = new File(getFilesDir(), dbPathStr);
         if (dbPath.exists() && dbPath.length() > 0) {
-            Log.d(TAG,"无需初始化数据库");
+            Log.d(TAG, "无需初始化数据库");
             return;
-        }else {
+        } else {
             try {
-                is = getAssets().open("phone_address_mi.db");
+                is = getAssets().open(dbPathStr);
                 fos = new FileOutputStream(dbPath);
                 byte[] buffer = new byte[1024];
                 int len = 0;
@@ -164,8 +173,8 @@ public class SplashActivity extends Activity {
                     URL apkUrl = new URL(getString(R.string.serverurl));
                     HttpURLConnection connection = (HttpURLConnection) apkUrl.openConnection();
                     connection.setRequestMethod("GET");
-                    connection.setConnectTimeout(10 * 1000);
-                    connection.setReadTimeout(5 * 1000);
+                    connection.setConnectTimeout(5 * 1000);
+                    connection.setReadTimeout(3 * 1000);
                     int responseCode = connection.getResponseCode();
                     if (responseCode / 100 == 2) {
                         InputStream is = connection.getInputStream();
@@ -254,7 +263,7 @@ public class SplashActivity extends Activity {
                         public void onFailure(Throwable t, int errorNo, String strMsg) {
                             t.printStackTrace();
                             //下载失败提示用户
-                            Toast.makeText(getApplicationContext(), "下载失败", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "下载失败，请检查网路", Toast.LENGTH_LONG).show();
                             super.onFailure(t, errorNo, strMsg);
                         }
 
@@ -264,6 +273,7 @@ public class SplashActivity extends Activity {
                             int progress = (int) (current * 100 / count);
                             mUpdateProgressTV.setVisibility(View.VISIBLE);
                             mUpdateProgressPB.setVisibility(View.VISIBLE);
+                            mCancelBTN.setVisibility(View.VISIBLE);
                             mUpdateProgressPB.setProgress(progress);
                         }
                     });

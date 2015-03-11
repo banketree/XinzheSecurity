@@ -12,7 +12,7 @@
             android:id="@+id/tv_app_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="已安装App：6个"/>
+            android:text="已安装App："/>
         <TextView
             android:id="@+id/tv_available_memory"
             android:layout_width="wrap_content"
