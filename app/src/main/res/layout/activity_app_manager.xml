@@ -2,23 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#ffbcb8ba">
+
         <TextView
             android:id="@+id/tv_app_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="已安装App："/>
+            android:text="已安装App：" />
+
         <TextView
             android:id="@+id/tv_available_memory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="手机剩余空间："/>
+            android:text="手机剩余空间：" />
     </RelativeLayout>
 
     <FrameLayout
@@ -31,10 +33,11 @@
             android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ProgressBar
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
-            </LinearLayout>
+        </LinearLayout>
 
         <ListView
             android:id="@+id/lv_app"
@@ -42,7 +45,7 @@
             android:layout_height="match_parent">
 
         </ListView>
-        </FrameLayout>
+    </FrameLayout>
 
 
 </LinearLayout>

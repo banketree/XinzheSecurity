@@ -2,6 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.linxinzhe.android.xinzhesecurity.AntivirusActivity">
-    <item android:id="@+id/start_antivirus" android:title="开始杀毒"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item
+        android:id="@+id/start_antivirus"
+        android:title="开始杀毒"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
 </menu>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dip" >
+    android:layout_height="60dip">
 
     <ImageView
         android:id="@+id/iv_icon"
@@ -12,17 +12,16 @@
         android:layout_marginBottom="5dip"
         android:layout_marginTop="5dip" />
 
-    <TextView 
+    <TextView
         android:layout_marginLeft="3dip"
         android:layout_marginTop="3dip"
         android:layout_toRightOf="@id/iv_icon"
-         android:id="@+id/tv_name"
-          android:layout_width="wrap_content"
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#000000"
         android:textSize="20sp"
-        android:text="APP名称"
-        />
+        android:text="APP名称" />
 
     <TextView
         android:id="@+id/tv_size"
@@ -41,7 +40,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:visibility="visible"/>
+        android:visibility="visible" />
 
 
 </RelativeLayout>

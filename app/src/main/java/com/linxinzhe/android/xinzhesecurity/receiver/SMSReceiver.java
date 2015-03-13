@@ -85,7 +85,7 @@ public class SMSReceiver extends BroadcastReceiver {
     private void deleteSMS(Context context) {
 
         long id = getThreadId(context);
-        Uri mUri=Uri.parse("content://sms/conversations/" + id);
+        Uri mUri = Uri.parse("content://sms/conversations/" + id);
         context.getContentResolver().delete(mUri, null, null);
     }
 
@@ -96,7 +96,7 @@ public class SMSReceiver extends BroadcastReceiver {
         String WHERE_CONDITION = SMS_READ_COLUMN + " = 0";
         String SORT_ORDER = "date DESC";
         int count = 0;
-        Cursor cursor = context.getContentResolver().query(Uri.parse("content://sms/inbox"),new String[] { "_id", "thread_id", "address", "person", "date", "body" },WHERE_CONDITION,null,SORT_ORDER);
+        Cursor cursor = context.getContentResolver().query(Uri.parse("content://sms/inbox"), new String[]{"_id", "thread_id", "address", "person", "date", "body"}, WHERE_CONDITION, null, SORT_ORDER);
         if (cursor != null) {
             try {
                 count = cursor.getCount();

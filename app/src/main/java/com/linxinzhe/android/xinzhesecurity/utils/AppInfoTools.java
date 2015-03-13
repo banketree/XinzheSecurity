@@ -33,8 +33,8 @@ public class AppInfoTools {
         List<PackageInfo> packInfos = pm.getInstalledPackages(0);
         List<AppInfo> appInfos = new ArrayList<AppInfo>();
 
-        ApplicationInfo applicationInfo=null;
-        File file=null;
+        ApplicationInfo applicationInfo = null;
+        File file = null;
         for (PackageInfo packInfo : packInfos) {
             AppInfo appInfo = new AppInfo();
             //packInfo  相当于一个应用程序apk包的清单文件
@@ -69,9 +69,9 @@ public class AppInfoTools {
             appInfo.setIcon(icon);
             appInfo.setName(name);
             appInfo.setMemory(memory);
-            if (appInfo.isUserApp()){
-                appInfos.add(0,appInfo);
-            }else{
+            if (appInfo.isUserApp()) {
+                appInfos.add(0, appInfo);
+            } else {
                 appInfos.add(appInfo);
             }
         }

@@ -41,27 +41,26 @@ public class AppManagerActivity extends ActionBarActivity {
     private ListView mAppLV;
 
     private List<AppInfo> appInfos;
-    private  AppInfo appInfo=null;
+    private AppInfo appInfo = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_manager);
-        mAppCountTV= (TextView) findViewById(R.id.tv_app_count);
-        mAvailableMemoryTV= (TextView) findViewById(R.id.tv_available_memory);
-        StatFs statFs=new StatFs(Environment.getDataDirectory().getAbsolutePath());
+        mAppCountTV = (TextView) findViewById(R.id.tv_app_count);
+        mAvailableMemoryTV = (TextView) findViewById(R.id.tv_available_memory);
+        StatFs statFs = new StatFs(Environment.getDataDirectory().getAbsolutePath());
         int localMemory = statFs.getAvailableBlocks() * statFs.getBlockSize();
-        mAvailableMemoryTV.setText("手机剩余空间："+Formatter.formatFileSize(this, localMemory));
+        mAvailableMemoryTV.setText("手机剩余空间：" + Formatter.formatFileSize(this, localMemory));
 
-        mAppLV= (ListView) findViewById(R.id.lv_app);
-
-        mLoadingLL= (LinearLayout) findViewById(R.id.ll_loading);
+        mLoadingLL = (LinearLayout) findViewById(R.id.ll_loading);
         mLoadingLL.setVisibility(View.VISIBLE);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    appInfos= (new AppInfoTools()).getAppInfos(AppManagerActivity.this);
+                    appInfos = (new AppInfoTools()).getAppInfos(AppManagerActivity.this);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 } catch (NoSuchMethodException e) {
@@ -76,19 +75,19 @@ public class AppManagerActivity extends ActionBarActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mAppCountTV.setText("已安装App："+appInfos.size()+"个");
+                        mAppCountTV.setText("已安装App：" + appInfos.size() + "个");
                         mAppLV.setAdapter(new AppAdapter());
                         mLoadingLL.setVisibility(View.INVISIBLE);
                     }
                 });
             }
         }).start();
+
+        mAppLV = (ListView) findViewById(R.id.lv_app);
     }
 
 
-
-
-    private class AppAdapter extends BaseAdapter{
+    private class AppAdapter extends BaseAdapter {
 
         private ImageView iconIV;
         private TextView nameTV;
@@ -111,54 +110,57 @@ public class AppManagerActivity extends ActionBarActivity {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            appInfo=appInfos.get(position);
+        public View getView(final int position, View convertView, ViewGroup parent) {
+            appInfo = appInfos.get(position);
             View view;
-            if (convertView==null){
+            if (convertView == null) {
                 LayoutInflater inflater = AppManagerActivity.this.getLayoutInflater();
                 view = inflater.inflate(R.layout.list_item_app_info, null);
-            }else {
-                view=convertView;
+            } else {
+                view = convertView;
             }
 
-            iconIV= (ImageView) view.findViewById(R.id.iv_icon);
-            nameTV= (TextView) view.findViewById(R.id.tv_name);
-            sizeTV= (TextView) view.findViewById(R.id.tv_size);
-            mUnstallBTN= (Button) view.findViewById(R.id.btn_uninstall);
+            iconIV = (ImageView) view.findViewById(R.id.iv_icon);
+            nameTV = (TextView) view.findViewById(R.id.tv_name);
+            sizeTV = (TextView) view.findViewById(R.id.tv_size);
+            mUnstallBTN = (Button) view.findViewById(R.id.btn_uninstall);
+
+            final String packname = appInfo.getPackname();
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    PackageManager pm=getPackageManager();
-                    Intent intent=pm.getLaunchIntentForPackage(appInfo.getPackname());
-                    if (intent!=null){
+                    PackageManager pm = getPackageManager();
+                    Intent intent = pm.getLaunchIntentForPackage(packname);
+                    if (intent != null) {
                         startActivity(intent);
-                    }else {
-                        Toast.makeText(AppManagerActivity.this,"该App是后台服务，无界面",Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(AppManagerActivity.this, "该App是后台服务，无界面", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
+
             iconIV.setImageDrawable(appInfo.getIcon());
             nameTV.setText(appInfo.getName());
+
             if (appInfo.isUserApp()) {
-                sizeTV.setText("用户App："+Formatter.formatFileSize(AppManagerActivity.this, appInfo.getMemory()));
+                sizeTV.setText("用户App：" + Formatter.formatFileSize(AppManagerActivity.this, appInfo.getMemory()));
                 mUnstallBTN.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent=new Intent();
+                        Intent intent = new Intent();
                         intent.setAction("android.intent.action.VIEW");
                         intent.setAction("android.intent.action.DELETE");
                         intent.addCategory("android.intent.category.DEFAULT");
-                        intent.setData(Uri.parse("package:"+appInfo.getPackname()));
-                        startActivityForResult(intent,0);
+                        intent.setData(Uri.parse("package:" + packname));
+                        startActivityForResult(intent, 0);
                     }
                 });
-            }else {
-                sizeTV.setText("系统App："+Formatter.formatFileSize(AppManagerActivity.this, appInfo.getMemory()));
+            } else {
+                sizeTV.setText("系统App：" + Formatter.formatFileSize(AppManagerActivity.this, appInfo.getMemory()));
                 mUnstallBTN.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(AppManagerActivity.this,"系统APP无法卸载",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(AppManagerActivity.this, "系统APP无法卸载", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -174,7 +176,7 @@ public class AppManagerActivity extends ActionBarActivity {
             @Override
             public void run() {
                 try {
-                    appInfos= (new AppInfoTools()).getAppInfos(AppManagerActivity.this);
+                    appInfos = (new AppInfoTools()).getAppInfos(AppManagerActivity.this);
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 } catch (NoSuchMethodException e) {
@@ -189,7 +191,7 @@ public class AppManagerActivity extends ActionBarActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        mAppCountTV.setText("已安装App："+appInfos.size()+"个");
+                        mAppCountTV.setText("已安装App：" + appInfos.size() + "个");
                         mAppLV.setAdapter(new AppAdapter());
                         mLoadingLL.setVisibility(View.INVISIBLE);
                     }

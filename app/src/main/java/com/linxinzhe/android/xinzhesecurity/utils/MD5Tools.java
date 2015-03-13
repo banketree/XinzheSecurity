@@ -38,11 +38,11 @@ public class MD5Tools {
     public static String encrypt(File file) {
         try {
             MessageDigest digest = MessageDigest.getInstance("md5");
-            FileInputStream fis=new FileInputStream(file);
-            byte[] buffer=new byte[1024];
-            int len=-1;
-            while ((len=fis.read(buffer))!=-1){
-                digest.update(buffer,0,len);
+            FileInputStream fis = new FileInputStream(file);
+            byte[] buffer = new byte[1024];
+            int len = -1;
+            while ((len = fis.read(buffer)) != -1) {
+                digest.update(buffer, 0, len);
             }
             byte[] result = digest.digest();
             StringBuilder builder = new StringBuilder();

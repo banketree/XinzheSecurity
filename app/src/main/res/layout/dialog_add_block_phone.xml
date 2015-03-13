@@ -3,8 +3,7 @@
     android:layout_width="300dip"
     android:layout_height="wrap_content"
     android:gravity="center_horizontal"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="300dip"
@@ -25,7 +24,7 @@
         android:layout_width="300dip"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <CheckBox
             android:id="@+id/cb_phone"
@@ -46,12 +45,14 @@
         android:layout_width="300dip"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
+
         <Button
             android:id="@+id/cancel"
             android:layout_width="140dip"
             android:layout_height="wrap_content"
             android:text="取消" />
+
         <Button
             android:id="@+id/ok"
             android:layout_width="140dip"

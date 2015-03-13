@@ -33,7 +33,6 @@ public class IncomingPhoneAddressService extends Service {
     }
 
 
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -54,10 +53,9 @@ public class IncomingPhoneAddressService extends Service {
     }
 
 
-
     public void phoneAddressToast(String address) {
-        view =   View.inflate(this, R.layout.address_toast, null);
-        TextView textview  = (TextView) view.findViewById(R.id.tv_phone_address);
+        view = View.inflate(this, R.layout.address_toast, null);
+        TextView textview = (TextView) view.findViewById(R.id.tv_phone_address);
 
         textview.setText(address);
         WindowManager.LayoutParams params = new WindowManager.LayoutParams();
@@ -98,7 +96,7 @@ public class IncomingPhoneAddressService extends Service {
                     phoneAddressToast(address);
                     break;
                 case TelephonyManager.CALL_STATE_IDLE://电话的空闲状态：挂电话、来电拒绝，则清除
-                    if(view != null ){
+                    if (view != null) {
                         wm.removeView(view);
                     }
                     break;
@@ -117,7 +115,7 @@ public class IncomingPhoneAddressService extends Service {
         public void onReceive(Context context, Intent intent) {
             String phone = getResultData();
             String address = PhoneAddressQueryDao.query(phone);
-            Toast.makeText(context,address,Toast.LENGTH_LONG).show();
+            Toast.makeText(context, address, Toast.LENGTH_LONG).show();
 
         }
     }

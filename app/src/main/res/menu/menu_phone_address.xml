@@ -2,6 +2,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.linxinzhe.android.xinzhesecurity.PhoneAddressActivity">
-    <item android:id="@+id/open_incoming_phone_address" android:title="开启来电自动查询"
-        android:orderInCategory="100" app:showAsAction="always" />
+    <item
+        android:id="@+id/open_incoming_phone_address"
+        android:title="开启来电自动查询"
+        android:orderInCategory="100"
+        app:showAsAction="always" />
 </menu>

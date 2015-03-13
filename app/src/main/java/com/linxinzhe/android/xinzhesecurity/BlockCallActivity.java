@@ -36,6 +36,7 @@ public class BlockCallActivity extends ActionBarActivity {
     private CallSmsSafeAdapter adapter;
 
     private TextView mOpenReminderTV;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,11 +47,11 @@ public class BlockCallActivity extends ActionBarActivity {
         adapter = new CallSmsSafeAdapter();
         lv_callsms_safe.setAdapter(adapter);
 
-        mOpenReminderTV= (TextView) findViewById(R.id.tv_call_block_reminder);
-        boolean isServiceRunning= ServiceTools.isExists(BlockCallActivity.this, "com.linxinzhe.android.xinzhesecurity.service.BlockCallService");
-        if (isServiceRunning){
+        mOpenReminderTV = (TextView) findViewById(R.id.tv_call_block_reminder);
+        boolean isServiceRunning = ServiceTools.isExists(BlockCallActivity.this, "com.linxinzhe.android.xinzhesecurity.service.BlockCallService");
+        if (isServiceRunning) {
             mOpenReminderTV.setVisibility(View.GONE);
-        }else {
+        } else {
             mOpenReminderTV.setVisibility(View.VISIBLE);
         }
     }
@@ -60,16 +61,17 @@ public class BlockCallActivity extends ActionBarActivity {
         public int getCount() {
             return infos.size();
         }
+
         //有多少个条目被显示，这个方法就会被调用多少次
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             View view;
             ViewHolder holder;
             //1.减少内存中view对象创建的个数
-            if(convertView==null){
+            if (convertView == null) {
                 Log.i(TAG, "创建新的view对象：" + position);
                 //把一个布局文件转化成  view对象。
-                view  = View.inflate(getApplicationContext(), R.layout.list_item_block_phonesms, null);
+                view = View.inflate(getApplicationContext(), R.layout.list_item_block_phonesms, null);
                 //2.减少子孩子查询的次数  内存中对象的地址。
                 holder = new ViewHolder();
                 holder.tv_number = (TextView) view.findViewById(R.id.tv_block_phone);
@@ -77,18 +79,18 @@ public class BlockCallActivity extends ActionBarActivity {
                 holder.btn_delete = (Button) view.findViewById(R.id.btn_delete);
                 //当孩子生出来的时候找到他们的引用，存放在记事本，放在父亲的口袋
                 view.setTag(holder);
-            }else{
-                Log.i(TAG,"复用历史缓存的view对象："+position);
+            } else {
+                Log.i(TAG, "复用历史缓存的view对象：" + position);
                 view = convertView;
                 holder = (ViewHolder) view.getTag();//5%
             }
             holder.tv_number.setText(infos.get(position).getPhone());
             String mode = infos.get(position).getMode();
-            if("1".equals(mode)){
+            if ("1".equals(mode)) {
                 holder.tv_mode.setText("来电拦截");
-            }else if("2".equals(mode)){
+            } else if ("2".equals(mode)) {
                 holder.tv_mode.setText("短信拦截");
-            }else{
+            } else {
                 holder.tv_mode.setText("全部拦截");
             }
             holder.btn_delete.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +116,7 @@ public class BlockCallActivity extends ActionBarActivity {
             });
             return view;
         }
+
         @Override
         public Object getItem(int position) {
             return null;
@@ -124,12 +127,13 @@ public class BlockCallActivity extends ActionBarActivity {
             return 0;
         }
     }
+
     /**
      * view对象的容器
-     *记录孩子的内存地址。
-     *相当于一个记事本
+     * 记录孩子的内存地址。
+     * 相当于一个记事本
      */
-    static class ViewHolder{
+    static class ViewHolder {
         TextView tv_number;
         TextView tv_mode;
         Button btn_delete;
@@ -142,21 +146,22 @@ public class BlockCallActivity extends ActionBarActivity {
     private Button bt_ok;
     private Button bt_cancel;
 
-    public void addBlackNumber(View view){
+    public void addBlackNumber(View view) {
 
     }
 
     private Menu menu = null;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_call_block, menu);
-        if (menu!=null){
-            this.menu=menu;
-            boolean isServiceRunning= ServiceTools.isExists(BlockCallActivity.this, "com.linxinzhe.android.xinzhesecurity.service.BlockCallService");
-            if (isServiceRunning){
+        if (menu != null) {
+            this.menu = menu;
+            boolean isServiceRunning = ServiceTools.isExists(BlockCallActivity.this, "com.linxinzhe.android.xinzhesecurity.service.BlockCallService");
+            if (isServiceRunning) {
                 menu.findItem(R.id.open_block).setTitle("关闭拦截");
-            }else {
+            } else {
                 menu.findItem(R.id.open_block).setTitle("开启拦截");
             }
         }
@@ -193,21 +198,21 @@ public class BlockCallActivity extends ActionBarActivity {
                 @Override
                 public void onClick(View v) {
                     String blacknumber = et_block_phone.getText().toString().trim();
-                    if(TextUtils.isEmpty(blacknumber)){
+                    if (TextUtils.isEmpty(blacknumber)) {
                         Toast.makeText(getApplicationContext(), "号码不能为空", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    String mode ;
-                    if(cb_phone.isChecked()&&cb_sms.isChecked()){
+                    String mode;
+                    if (cb_phone.isChecked() && cb_sms.isChecked()) {
                         //全部拦截
                         mode = "3";
-                    }else if(cb_phone.isChecked()){
+                    } else if (cb_phone.isChecked()) {
                         //电话拦截
                         mode = "1";
-                    }else if(cb_sms.isChecked()){
+                    } else if (cb_sms.isChecked()) {
                         //短信拦截
                         mode = "2";
-                    }else{
+                    } else {
                         Toast.makeText(getApplicationContext(), "请选择拦截模式", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -224,13 +229,13 @@ public class BlockCallActivity extends ActionBarActivity {
                 }
             });
             return true;
-        }else if (id==R.id.open_block){
+        } else if (id == R.id.open_block) {
             if (item.getTitle().equals("关闭拦截")) {
                 Intent intent = new Intent(BlockCallActivity.this, BlockCallService.class);
                 stopService(intent);
                 menu.findItem(id).setTitle("开启拦截");
                 mOpenReminderTV.setVisibility(View.VISIBLE);
-            }else if (item.getTitle().equals("开启拦截")){
+            } else if (item.getTitle().equals("开启拦截")) {
                 Intent intent = new Intent(BlockCallActivity.this, BlockCallService.class);
                 startService(intent);
                 menu.findItem(id).setTitle("关闭拦截");

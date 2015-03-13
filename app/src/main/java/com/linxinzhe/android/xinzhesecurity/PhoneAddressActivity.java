@@ -38,8 +38,8 @@ public class PhoneAddressActivity extends ActionBarActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s!=null) {
-                    String address=PhoneAddressQueryDao.query(s.toString());
+                if (s != null) {
+                    String address = PhoneAddressQueryDao.query(s.toString());
                     mAddressTV.setText(address);
                 }
             }
@@ -67,16 +67,17 @@ public class PhoneAddressActivity extends ActionBarActivity {
 
 
     private Menu menu = null;
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_phone_address, menu);
-        if (menu!=null){
-            this.menu=menu;
-            boolean isServiceRunning= ServiceTools.isExists(PhoneAddressActivity.this, "com.linxinzhe.android.xinzhesecurity.service.IncomingPhoneAddressService");
-            if (isServiceRunning){
+        if (menu != null) {
+            this.menu = menu;
+            boolean isServiceRunning = ServiceTools.isExists(PhoneAddressActivity.this, "com.linxinzhe.android.xinzhesecurity.service.IncomingPhoneAddressService");
+            if (isServiceRunning) {
                 menu.findItem(R.id.open_incoming_phone_address).setTitle("关闭来电自动查询");
-            }else {
+            } else {
                 menu.findItem(R.id.open_incoming_phone_address).setTitle("开启来电自动查询");
             }
         }
@@ -96,7 +97,7 @@ public class PhoneAddressActivity extends ActionBarActivity {
                 Intent intent = new Intent(PhoneAddressActivity.this, IncomingPhoneAddressService.class);
                 stopService(intent);
                 menu.findItem(id).setTitle("开启来电自动查询");
-            }else if (item.getTitle().equals("开启来电自动查询")){
+            } else if (item.getTitle().equals("开启来电自动查询")) {
                 Intent intent = new Intent(PhoneAddressActivity.this, IncomingPhoneAddressService.class);
                 startService(intent);
                 menu.findItem(id).setTitle("关闭来电自动查询");

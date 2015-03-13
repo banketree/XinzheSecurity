@@ -7,13 +7,13 @@ import java.util.List;
 
 public class ServiceTools {
 
-    public static boolean isExists(Context context,String serviceName){
+    public static boolean isExists(Context context, String serviceName) {
 
-        ActivityManager am= (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningServiceInfo> runningServicesInfos = am.getRunningServices(200);
-        for (ActivityManager.RunningServiceInfo info: runningServicesInfos){
-            String name=info.service.getClassName();
-            if (serviceName.equals(name)){
+        for (ActivityManager.RunningServiceInfo info : runningServicesInfos) {
+            String name = info.service.getClassName();
+            if (serviceName.equals(name)) {
                 return true;
             }
         }

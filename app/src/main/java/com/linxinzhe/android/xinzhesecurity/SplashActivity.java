@@ -132,7 +132,7 @@ public class SplashActivity extends Activity {
             }
         });
 
-        //初始化归属地数据库
+        //初始化数据库
         initDatabase("antivirus_kingsoft.db");
         initDatabase("phone_address_mi.db");
     }

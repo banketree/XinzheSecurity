@@ -28,7 +28,7 @@ public class MoreToolsActivity extends ActionBarActivity {
     private MyAdapter mAdapter;
 
     private static String[] names = {
-             "短信备份","短信还原",
+            "短信备份", "短信还原",
     };
     private static int[] icons = {
             R.mipmap.ic_cloud_upload_black_48dp, R.mipmap.ic_cloud_download_black_48dp,
@@ -44,7 +44,7 @@ public class MoreToolsActivity extends ActionBarActivity {
         mListHomeGV.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent=null;
+                Intent intent = null;
                 switch (position) {
                     case 0:
                         try {
@@ -63,11 +63,11 @@ public class MoreToolsActivity extends ActionBarActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 try {
-                                    File backUpSmsFile=new File(Environment.getExternalStorageDirectory(), "backupSms.xml");
-                                    if (backUpSmsFile.exists()&&backUpSmsFile.length()>0) {
+                                    File backUpSmsFile = new File(Environment.getExternalStorageDirectory(), "backupSms.xml");
+                                    if (backUpSmsFile.exists() && backUpSmsFile.length() > 0) {
                                         SmsTools.restoreSms(MoreToolsActivity.this, true);
                                         Toast.makeText(MoreToolsActivity.this, "短信还原成功！", Toast.LENGTH_SHORT).show();
-                                    }else {
+                                    } else {
                                         Toast.makeText(MoreToolsActivity.this, "您从未备份过！", Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (IOException e) {

@@ -24,7 +24,7 @@ public class BootCompleteReceiver extends BroadcastReceiver {
         boolean protecting = sp.getBoolean("protecting", false);
         if (protecting) {
             String savedSim = sp.getString("sim", null);
-            String realSim = tm.getSimSerialNumber() ;
+            String realSim = tm.getSimSerialNumber();
             Log.i("config", "sim卡比较即将执行");
             if (savedSim.equals(realSim)) {
                 Log.i("config", "sim卡相同");

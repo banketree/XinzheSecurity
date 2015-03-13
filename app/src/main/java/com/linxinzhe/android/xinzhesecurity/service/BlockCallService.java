@@ -36,14 +36,14 @@ public class BlockCallService extends Service {
             Log.i(TAG, "内部广播接受者， 短信到来了");
             //检查发件人是否是黑名单号码，设置短信拦截全部拦截。
             Object[] objs = (Object[]) intent.getExtras().get("pdus");
-            for(Object obj:objs){
+            for (Object obj : objs) {
                 SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) obj);
                 //得到短信发件人
                 String sender = smsMessage.getOriginatingAddress();
-                Log.i(TAG,sender);
+                Log.i(TAG, sender);
                 String result = dao.findMode(sender);
-                if("2".equals(result)||"3".equals(result)){
-                    Log.i(TAG,"拦截短信");
+                if ("2".equals(result) || "3".equals(result)) {
+                    Log.i(TAG, "拦截短信");
                     abortBroadcast();
 //                    deleteSMS(context);
                 }
@@ -58,9 +58,9 @@ public class BlockCallService extends Service {
         listener = new MyListener();
         tm.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
         receiver = new InnerSmsReceiver();
-        IntentFilter filter =  new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
+        IntentFilter filter = new IntentFilter("android.provider.Telephony.SMS_RECEIVED");
         filter.setPriority(IntentFilter.SYSTEM_HIGH_PRIORITY);
-        registerReceiver(receiver,filter);
+        registerReceiver(receiver, filter);
         super.onCreate();
     }
 
@@ -72,15 +72,15 @@ public class BlockCallService extends Service {
         super.onDestroy();
     }
 
-    private class MyListener extends PhoneStateListener{
+    private class MyListener extends PhoneStateListener {
 
         @Override
         public void onCallStateChanged(int state, String incomingNumber) {
             switch (state) {
                 case TelephonyManager.CALL_STATE_RINGING://响铃状态
                     String result = dao.findMode(incomingNumber);
-                    if("1".equals(result)||"3".equals(result)){
-                        Log.i(TAG,"挂断电话");
+                    if ("1".equals(result) || "3".equals(result)) {
+                        Log.i(TAG, "挂断电话");
                         endCall();
                     }
                     break;
@@ -103,11 +103,10 @@ public class BlockCallService extends Service {
     }
 
 
-
     private void deleteSMS(Context context) {
 
         long id = getThreadId(context);
-        Uri mUri=Uri.parse("content://sms/conversations/" + id);
+        Uri mUri = Uri.parse("content://sms/conversations/" + id);
         context.getContentResolver().delete(mUri, null, null);
     }
 
@@ -118,7 +117,7 @@ public class BlockCallService extends Service {
         String WHERE_CONDITION = SMS_READ_COLUMN + " = 0";
         String SORT_ORDER = "date DESC";
         int count = 0;
-        Cursor cursor = context.getContentResolver().query(Uri.parse("content://sms/inbox"),new String[] { "_id", "thread_id", "address", "person", "date", "body" },WHERE_CONDITION,null,SORT_ORDER);
+        Cursor cursor = context.getContentResolver().query(Uri.parse("content://sms/inbox"), new String[]{"_id", "thread_id", "address", "person", "date", "body"}, WHERE_CONDITION, null, SORT_ORDER);
         if (cursor != null) {
             try {
                 count = cursor.getCount();

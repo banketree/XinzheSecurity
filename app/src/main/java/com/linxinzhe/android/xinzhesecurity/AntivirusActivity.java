@@ -36,28 +36,28 @@ public class AntivirusActivity extends ActionBarActivity {
     private LinearLayout mScanningListLL;
 
 
-    private Handler mHandler=new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            switch (msg.what){
+            switch (msg.what) {
                 case SCANNINGAPPINFO:
-                    AppInfo appInfo=(AppInfo)(msg.obj);
+                    AppInfo appInfo = (AppInfo) (msg.obj);
                     mScanningTV.setText("正在扫描：" + appInfo.appName);
-                    if (appInfo.isVirus){
+                    if (appInfo.isVirus) {
                         TextView tvV = new TextView(AntivirusActivity.this);
-                        tvV.setText("病毒："+appInfo.appPackageName);
+                        tvV.setText("病毒：" + appInfo.appPackageName);
                         tvV.setTextColor(Color.RED);
                         mScanningListLL.addView(tvV, 0);
-                    }else {
+                    } else {
                         TextView tvC = new TextView(AntivirusActivity.this);
-                        tvC.setText("安全："+appInfo.appPackageName);
+                        tvC.setText("安全：" + appInfo.appPackageName);
                         tvC.setTextColor(Color.GREEN);
                         mScanningListLL.addView(tvC, 0);
                     }
-                    if (appCount!=appTotalNum) {
-                        mScanProgressTV.setText((int)((++appCount)*1.0/appTotalNum*100)+"%");
-                    }else {
+                    if (appCount != appTotalNum) {
+                        mScanProgressTV.setText((int) ((++appCount) * 1.0 / appTotalNum * 100) + "%");
+                    } else {
                         mScanProgressTV.setText("100%");
                     }
                     break;
@@ -75,7 +75,7 @@ public class AntivirusActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 mScanProgressTV.setClickable(false);
-                appCount=0;
+                appCount = 0;
                 scan();
                 mScanProgressTV.setClickable(true);
             }
@@ -85,8 +85,7 @@ public class AntivirusActivity extends ActionBarActivity {
     }
 
 
-
-    class AppInfo{
+    class AppInfo {
         String appName;
         String appPackageName;
         boolean isVirus;
@@ -101,23 +100,23 @@ public class AntivirusActivity extends ActionBarActivity {
                 String sourceDir = null;
                 File file = null;
                 appTotalNum = packageInfos.size();
-                AppInfo appInfo=null;
+                AppInfo appInfo = null;
                 for (PackageInfo info : packageInfos) {
                     sourceDir = info.applicationInfo.sourceDir;
                     file = new File(sourceDir);
                     String md5File = MD5Tools.encrypt(file);
                     Log.i(TAG, sourceDir + ":" + md5File);
-                    appInfo=new AppInfo();
+                    appInfo = new AppInfo();
                     appInfo.appName = info.applicationInfo.loadLabel(pm).toString();
                     appInfo.appPackageName = info.packageName;
                     if (Md5AntivirusDao.isVirus(AntivirusActivity.this, md5File)) {
-                        appInfo.isVirus=true;
+                        appInfo.isVirus = true;
                     } else {
-                        appInfo.isVirus=false;
+                        appInfo.isVirus = false;
                     }
-                    Message msg=new Message();
-                    msg.what=SCANNINGAPPINFO;
-                    msg.obj=appInfo;
+                    Message msg = new Message();
+                    msg.what = SCANNINGAPPINFO;
+                    msg.obj = appInfo;
                     mHandler.sendMessage(msg);
                 }
             }
