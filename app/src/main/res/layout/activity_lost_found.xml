@@ -95,12 +95,12 @@
     <TextView
         style="@style/TextContent"
         android:drawableLeft="@mipmap/ic_sms_black_18dp"
-        android:text="GPS定位:dingwei#" />
+        android:text="GPS定位:dingwei*#" />
 
     <TextView
         style="@style/TextContent"
         android:drawableLeft="@mipmap/ic_sms_black_18dp"
-        android:text="警报声音：jingbao#" />
+        android:text="警报声音：jingbao*#" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -109,7 +109,7 @@
         <TextView
             style="@style/TextContent"
             android:drawableLeft="@mipmap/ic_sms_black_18dp"
-            android:text="锁死屏幕:suoding#" />
+            android:text="锁死屏幕:suoding*#" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
     <TextView
         style="@style/TextContent"
         android:drawableLeft="@mipmap/ic_sms_black_18dp"
-        android:text="数据销毁:shanchu#" />
+        android:text="数据销毁:shanchu*#" />
 
 
     <LinearLayout

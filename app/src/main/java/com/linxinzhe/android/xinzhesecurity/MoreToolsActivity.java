@@ -1,9 +1,12 @@
 package com.linxinzhe.android.xinzhesecurity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +28,7 @@ import java.io.IOException;
 
 
 public class MoreToolsActivity extends ActionBarActivity {
+    private static final int BACKUP_SUCCESS = 0;
     private GridView mListHomeGV;
     private MyAdapter mAdapter;
 
@@ -32,6 +37,16 @@ public class MoreToolsActivity extends ActionBarActivity {
     };
     private static int[] icons = {
             R.mipmap.ic_cloud_upload_black_48dp, R.mipmap.ic_cloud_download_black_48dp,
+    };
+
+    private Handler mHandler=new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what==BACKUP_SUCCESS){
+                Toast.makeText(MoreToolsActivity.this, (CharSequence) msg.obj, Toast.LENGTH_SHORT).show();
+            }
+        }
     };
 
     @Override
@@ -62,20 +77,35 @@ public class MoreToolsActivity extends ActionBarActivity {
                         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                try {
-                                    File backUpSmsFile = new File(Environment.getExternalStorageDirectory(), "backupSms.xml");
-                                    if (backUpSmsFile.exists() && backUpSmsFile.length() > 0) {
-                                        SmsTools.restoreSms(MoreToolsActivity.this, true);
-                                        Toast.makeText(MoreToolsActivity.this, "短信还原成功！", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(MoreToolsActivity.this, "您从未备份过！", Toast.LENGTH_SHORT).show();
-                                    }
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                    Toast.makeText(MoreToolsActivity.this, "短信还原失败！", Toast.LENGTH_SHORT).show();
-                                } catch (XmlPullParserException e) {
-                                    e.printStackTrace();
-                                    Toast.makeText(MoreToolsActivity.this, "短信还原失败！", Toast.LENGTH_SHORT).show();
+                                File backUpSmsFile = new File(Environment.getExternalStorageDirectory(), "backupSms.xml");
+                                if (backUpSmsFile.exists() && backUpSmsFile.length() > 0) {
+                                    final ProgressDialog tmpPD = new ProgressDialog(MoreToolsActivity.this);
+                                    tmpPD.setTitle("还原中");
+                                    tmpPD.setMessage("若短信较多，请稍安勿躁！");
+                                    tmpPD.setIndeterminate(true);
+                                    tmpPD.setCancelable(false);
+                                    tmpPD.show();
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            try {
+                                                SmsTools.restoreSms(MoreToolsActivity.this, true);
+                                                Message msg=new Message();
+                                                msg.what=BACKUP_SUCCESS;
+                                                msg.obj="还原成功！";
+                                                mHandler.sendMessage(msg);
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                                Toast.makeText(MoreToolsActivity.this, "还原失败！", Toast.LENGTH_SHORT).show();
+                                            } catch (XmlPullParserException e) {
+                                                e.printStackTrace();
+                                                Toast.makeText(MoreToolsActivity.this, "还原失败！", Toast.LENGTH_SHORT).show();
+                                            }
+                                            tmpPD.dismiss();
+                                        }
+                                    }).start();
+                                } else {
+                                    Toast.makeText(MoreToolsActivity.this, "您从未备份过！", Toast.LENGTH_SHORT).show();
                                 }
                             }
                         });

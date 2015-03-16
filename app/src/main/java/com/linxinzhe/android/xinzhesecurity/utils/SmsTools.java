@@ -2,6 +2,7 @@ package com.linxinzhe.android.xinzhesecurity.utils;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +11,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
+import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
@@ -17,6 +19,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Xml;
+import android.widget.Toast;
 
 public class SmsTools {
 
@@ -133,14 +136,16 @@ public class SmsTools {
         fos.close();
     }
 
-    public static void restoreSms(Context context, boolean flag) throws IOException, XmlPullParserException {
+    public static void restoreSms(final Context context, final boolean flag) throws IOException, XmlPullParserException {
+
         Uri uri = Uri.parse("content://sms/");
         if (flag) {
             context.getContentResolver().delete(uri, null, null);
         }
         ContentValues smsContent = new ContentValues();
         XmlPullParser parser = Xml.newPullParser();
-        InputStream is = new FileInputStream(new File(Environment.getExternalStorageDirectory(), "backupSms.xml"));
+        InputStream is = null;
+        is = new FileInputStream(new File(Environment.getExternalStorageDirectory(), "backupSms.xml"));
         parser.setInput(is, "utf-8");
         int eventType = parser.getEventType();
         while (eventType != XmlPullParser.END_DOCUMENT) {
@@ -174,5 +179,7 @@ public class SmsTools {
             }
             eventType = parser.next();
         }
+
+
     }
 }

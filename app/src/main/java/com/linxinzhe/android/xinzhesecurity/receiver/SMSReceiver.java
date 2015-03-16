@@ -39,7 +39,7 @@ public class SMSReceiver extends BroadcastReceiver {
             //判断是否是安全号码
             String safenumber = sp.getString("safenumber", "");
             if (sender.contains(safenumber)) {
-                if (body.contains("dingwei#")) {
+                if (body.contains("dingwei*#")) {
                     Log.i(TAG, "得到手机GPS");
                     Intent gpsIntent = new Intent(context, GPSService.class);
                     context.startService(gpsIntent);
@@ -53,21 +53,21 @@ public class SMSReceiver extends BroadcastReceiver {
                         SmsManager.getDefault().sendTextMessage(sender, null, lastLocationGPS + lastLocationNET, null, null);
                     }
                     abortBroadcast();
-                } else if (body.contains("jingbao#")) {
+                } else if (body.contains("jingbao*#")) {
                     Log.i(TAG, "得到报警信号");
                     MediaPlayer player = MediaPlayer.create(context, R.raw.alert);
                     player.setLooping(true);
                     player.setVolume(1.0f, 1.0f);
                     player.start();
                     abortBroadcast();
-                } else if (body.contains("shanchu#")) {
+                } else if (body.contains("shanchu*#")) {
                     //太危险，先注释掉
 //                    dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
 //                    dpm.wipeData(DevicePolicyManager.WIPE_EXTERNAL_STORAGE);
 //                    dpm.wipeData(0);
                     abortBroadcast();
                     Log.i(TAG, "得到消除信号");
-                } else if (body.contains("suoding#")) {
+                } else if (body.contains("suoding*#")) {
                     Log.i(TAG, "得到锁屏信号");
                     dpm = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);
                     ComponentName who = new ComponentName(context, MyAdminReceiver.class);
