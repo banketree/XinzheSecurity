@@ -5,9 +5,9 @@ import android.database.DatabaseErrorHandler;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class CallBlockDBOpenHelper extends SQLiteOpenHelper {
+public class BlockCallDBOpenHelper extends SQLiteOpenHelper {
 
-    public CallBlockDBOpenHelper(Context context) {
+    public BlockCallDBOpenHelper(Context context) {
         super(context, "blockphone.db", null, 1);
     }
 

@@ -14,14 +14,14 @@ import android.telephony.TelephonyManager;
 import android.util.Log;
 
 import com.android.internal.telephony.ITelephony;
-import com.linxinzhe.android.xinzhesecurity.db.CallBlockDao;
+import com.linxinzhe.android.xinzhesecurity.db.BlockCallDao;
 
 import java.lang.reflect.Method;
 
 public class BlockCallService extends Service {
     public static final String TAG = "CallSmsSafeService";
     private InnerSmsReceiver receiver;
-    private CallBlockDao dao;
+    private BlockCallDao dao;
     private TelephonyManager tm;
     private MyListener listener;
 
@@ -53,7 +53,7 @@ public class BlockCallService extends Service {
 
     @Override
     public void onCreate() {
-        dao = new CallBlockDao(this);
+        dao = new BlockCallDao(this);
         tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         listener = new MyListener();
         tm.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);

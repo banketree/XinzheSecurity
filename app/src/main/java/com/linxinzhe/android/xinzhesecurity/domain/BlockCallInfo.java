@@ -1,6 +1,7 @@
 package com.linxinzhe.android.xinzhesecurity.domain;
 
-public class CallBlockInfo {
+public class BlockCallInfo {
+
     private String phone;
     private String mode;
 
