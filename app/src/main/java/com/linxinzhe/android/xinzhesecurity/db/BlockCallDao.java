@@ -43,6 +43,22 @@ public class BlockCallDao {
         return result;
     }
 
+    public BlockCallInfo findInfo(String phone,String mode) {
+        BlockCallInfo info=null;
+        SQLiteDatabase db = helper.getReadableDatabase();
+        if (db.isOpen()) {
+            Cursor cursor = db.rawQuery("SELECT phone,mode FROM blockphone WHERE phone=?,mode=?", new String[]{phone,mode});
+            while (cursor.moveToNext()) {
+                info= new BlockCallInfo();
+                info.setPhone(cursor.getString(0));
+                info.setMode(cursor.getString(1));
+            }
+            cursor.close();
+            db.close();
+        }
+        return info;
+    }
+
     /**
      * 查询黑名单号码是是否存在
      *
@@ -120,6 +136,17 @@ public class BlockCallDao {
         }
     }
 
+    public void update(String newPhone,String newmode, String phone) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        if(db.isOpen()) {
+            if (phone==newPhone) {
+                db.execSQL("UPDATE blockphone SET mode=? WHERE phone=?", new String[]{newmode, phone});
+            }else{
+                db.execSQL("UPDATE blockphone SET phone=?,mode=?, WHERE phone=?", new String[]{newPhone,newmode, phone});
+            }
+            db.close();
+        }
+    }
     /**
      * 删除黑名单号码
      *

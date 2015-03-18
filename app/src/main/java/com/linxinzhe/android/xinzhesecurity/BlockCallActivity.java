@@ -104,6 +104,78 @@ public class BlockCallActivity extends ActionBarActivity {
                     builder.show();
                 }
             });
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(BlockCallActivity.this);
+                    final AlertDialog dialog = builder.create();
+                    View contentView = View.inflate(BlockCallActivity.this, R.layout.dialog_add_block_phone, null);
+                    mPhoneET = (EditText) contentView.findViewById(R.id.et_block_phone);
+                    mPhoneET.setText(infos.get(position).getPhone());
+                    mPhoneCB = (CheckBox) contentView.findViewById(R.id.cb_phone);
+                    mSmsCB = (CheckBox) contentView.findViewById(R.id.cb_sms);
+                    String mode = infos.get(position).getMode();
+                    if ("1".equals(mode)) {
+                        mPhoneCB.setChecked(true);
+                        mSmsCB.setChecked(false);
+                    } else if ("2".equals(mode)) {
+                        mPhoneCB.setChecked(false);
+                        mSmsCB.setChecked(true);
+                    } else {
+                        mPhoneCB.setChecked(true);
+                        mSmsCB.setChecked(true);
+                    }
+                    mCancelBTN = (Button) contentView.findViewById(R.id.btn_cancel);
+                    mAddBTN = (Button) contentView.findViewById(R.id.btn_add);
+                    dialog.setView(contentView, 0, 0, 0, 0);
+                    dialog.show();
+
+                    mCancelBTN.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss();
+                        }
+                    });
+                    mAddBTN.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            String newPhone = mPhoneET.getText().toString().trim();
+                            if (TextUtils.isEmpty(newPhone)) {
+                                Toast.makeText(getApplicationContext(), "号码不能为空", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            String mode;
+                            if (mPhoneCB.isChecked() && mSmsCB.isChecked()) {
+                                //全部拦截
+                                mode = "3";
+                            } else if (mPhoneCB.isChecked()) {
+                                //电话拦截
+                                mode = "1";
+                            } else if (mSmsCB.isChecked()) {
+                                //短信拦截
+                                mode = "2";
+                            } else {
+                                Toast.makeText(getApplicationContext(), "请选择拦截模式", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+                            //数据被更新到数据库，并更新界面
+                            String oldPhone=infos.get(position).getPhone();
+                            if(newPhone.equals(oldPhone)){
+                                dao.update(newPhone, mode,oldPhone);
+                            }else{
+                                dao.update(oldPhone,mode);
+                            }
+                            BlockCallInfo info = new BlockCallInfo();
+                            info.setMode(mode);
+                            info.setPhone(newPhone);
+                            infos.remove(position);
+                            infos.add(position, info);
+                            adapter.notifyDataSetChanged();
+                            dialog.dismiss();
+                        }
+                    });
+                }
+            });
             return view;
         }
 
@@ -179,8 +251,8 @@ public class BlockCallActivity extends ActionBarActivity {
             mAddBTN.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    String blacknumber = mPhoneET.getText().toString().trim();
-                    if (TextUtils.isEmpty(blacknumber)) {
+                    String phone = mPhoneET.getText().toString().trim();
+                    if (TextUtils.isEmpty(phone)) {
                         Toast.makeText(getApplicationContext(), "号码不能为空", Toast.LENGTH_SHORT).show();
                         return;
                     }
@@ -199,10 +271,10 @@ public class BlockCallActivity extends ActionBarActivity {
                         return;
                     }
                     //数据被加到数据库，并更新界面
-                    dao.add(blacknumber, mode);
+                    dao.add(phone, mode);
                     BlockCallInfo info = new BlockCallInfo();
                     info.setMode(mode);
-                    info.setPhone(blacknumber);
+                    info.setPhone(phone);
                     infos.add(0, info);
                     adapter.notifyDataSetChanged();
                     dialog.dismiss();
