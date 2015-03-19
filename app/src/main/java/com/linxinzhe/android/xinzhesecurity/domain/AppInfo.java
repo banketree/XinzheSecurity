@@ -12,6 +12,24 @@ public class AppInfo {
     private long memory;
     private boolean inRom;
     private boolean userApp;
+    private long rxBytes;
+    private long txBytes;
+
+    public long getRxBytes() {
+        return rxBytes;
+    }
+
+    public void setRxBytes(long rxBytes) {
+        this.rxBytes = rxBytes;
+    }
+
+    public long getTxBytes() {
+        return txBytes;
+    }
+
+    public void setTxBytes(long txBytes) {
+        this.txBytes = txBytes;
+    }
 
     public Drawable getIcon() {
         return icon;

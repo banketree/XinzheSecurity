@@ -117,6 +117,10 @@ public class MoreToolsActivity extends ActionBarActivity {
                         intent = new Intent(MoreToolsActivity.this, CleanActivity.class);
                         startActivity(intent);
                         break;
+                    case 3:
+                        intent = new Intent(MoreToolsActivity.this, TrafficStatisticsActivity.class);
+                        startActivity(intent);
+                        break;
                 }
             }
         });

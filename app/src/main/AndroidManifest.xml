@@ -182,7 +182,15 @@
             android:parentActivityName=".HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.linxinzhe.android.xinzhesecurity.HomeActivity" />
+                android:value="com.linxinzhe.android.xinzhesecurity.MoreToolsActivity" />
+        </activity>
+        <activity
+            android:name=".TrafficStatisticsActivity"
+            android:label="@string/title_activity_traffic_statistics"
+            android:parentActivityName=".MoreToolsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.linxinzhe.android.xinzhesecurity.MoreToolsActivity" />
         </activity>
     </application>
 

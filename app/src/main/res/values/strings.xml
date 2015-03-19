@@ -21,5 +21,6 @@
     <string name="title_activity_app_manager">APP管理</string>
     <string name="title_activity_antivirus">手机杀毒</string>
     <string name="title_activity_clean">清理优化</string>
+    <string name="title_activity_traffic_statistics">流量统计</string>
 
 </resources>
