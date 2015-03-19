@@ -15,7 +15,7 @@
     <string name="title_activity_select_contact">选择联系人</string>
     <string name="xinzhesecurity_device_admin">欣哲卫士权限激活</string>
     <string name="xinzhesecurity_device_admin_description">获取系统高级权限</string>
-    <string name="title_activity_more_tools">高级工具</string>
+    <string name="title_activity_more_tools">百宝箱</string>
     <string name="title_activity_phone_address">来电查询</string>
     <string name="title_activity_call_block">骚扰拦截</string>
     <string name="title_activity_app_manager">APP管理</string>
