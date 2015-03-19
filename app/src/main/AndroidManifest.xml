@@ -176,6 +176,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.linxinzhe.android.xinzhesecurity.HomeActivity" />
         </activity>
+        <activity
+            android:name=".CleanActivity"
+            android:label="@string/title_activity_clean"
+            android:parentActivityName=".HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.linxinzhe.android.xinzhesecurity.HomeActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -33,10 +33,11 @@ public class MoreToolsActivity extends ActionBarActivity {
     private MyAdapter mAdapter;
 
     private static String[] names = {
-            "短信备份", "短信还原",
+            "短信备份", "短信还原","清理优化","流量统计"
     };
     private static int[] icons = {
             R.mipmap.ic_cloud_upload_black_48dp, R.mipmap.ic_cloud_download_black_48dp,
+            R.mipmap.ic_format_paint_black_48dp,R.mipmap.ic_import_export_black_48dp
     };
 
     private Handler mHandler=new Handler(){
@@ -111,6 +112,10 @@ public class MoreToolsActivity extends ActionBarActivity {
                         });
                         builder.setNegativeButton("取消", null);
                         builder.show();
+                        break;
+                    case 2:
+                        intent = new Intent(MoreToolsActivity.this, CleanActivity.class);
+                        startActivity(intent);
                         break;
                 }
             }

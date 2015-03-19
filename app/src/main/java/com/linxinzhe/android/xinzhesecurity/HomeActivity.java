@@ -30,14 +30,14 @@ public class HomeActivity extends ActionBarActivity {
     private MyAdapter mAdapter;
 
     private static String[] names = {
-            "手机防盗", "手机杀毒", "手机优化",
-            "骚扰拦截", "APP管理", "内存管理",
-            "流量统计", "百宝箱", "来电查询"
+            "手机防盗", "手机杀毒",
+            "骚扰拦截", "APP管理",
+            "来电查询","百宝箱"
     };
     private static int[] icons = {
-            R.mipmap.ic_screen_lock_portrait_black_48dp, R.mipmap.ic_security_black_48dp, R.mipmap.ic_format_paint_black_48dp,
-            R.mipmap.ic_phone_missed_black_48dp, R.mipmap.ic_dvr_black_48dp, R.mipmap.ic_web_black_48dp,
-            R.mipmap.ic_import_export_black_48dp, R.mipmap.ic_work_black_48dp, R.mipmap.ic_call_black_48dp
+            R.mipmap.ic_screen_lock_portrait_black_48dp, R.mipmap.ic_security_black_48dp,
+            R.mipmap.ic_phone_missed_black_48dp, R.mipmap.ic_dvr_black_48dp,
+            R.mipmap.ic_call_black_48dp,R.mipmap.ic_work_black_48dp,
     };
 
     @Override
@@ -65,22 +65,23 @@ public class HomeActivity extends ActionBarActivity {
                         startActivity(intent);
                         break;
                     //拦截骚扰
-                    case 3:
+                    case 2:
                         intent = new Intent(HomeActivity.this, BlockCallActivity.class);
                         startActivity(intent);
                         break;
                     //APP管理
-                    case 4:
+                    case 3:
                         intent = new Intent(HomeActivity.this, AppManagerActivity.class);
                         startActivity(intent);
                         break;
-                    //高级工具
-                    case 7:
-                        intent = new Intent(HomeActivity.this, MoreToolsActivity.class);
+                    //来电查询
+                    case 4:
+                        intent = new Intent(HomeActivity.this, PhoneAddressActivity.class);
                         startActivity(intent);
                         break;
-                    case 8:
-                        intent = new Intent(HomeActivity.this, PhoneAddressActivity.class);
+                    //高级工具
+                    case 5:
+                        intent = new Intent(HomeActivity.this, MoreToolsActivity.class);
                         startActivity(intent);
                         break;
                 }

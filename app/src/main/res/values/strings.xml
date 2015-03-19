@@ -20,5 +20,6 @@
     <string name="title_activity_call_block">骚扰拦截</string>
     <string name="title_activity_app_manager">APP管理</string>
     <string name="title_activity_antivirus">手机杀毒</string>
+    <string name="title_activity_clean">清理优化</string>
 
 </resources>
