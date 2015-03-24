@@ -2,23 +2,17 @@ package com.linxinzhe.android.xinzhesecurity.utils;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.IPackageStatsObserver;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.pm.PackageStats;
 import android.graphics.drawable.Drawable;
 import android.net.TrafficStats;
 import android.os.RemoteException;
-import android.util.Log;
 
 import com.linxinzhe.android.xinzhesecurity.domain.AppInfo;
 
 import java.io.File;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**

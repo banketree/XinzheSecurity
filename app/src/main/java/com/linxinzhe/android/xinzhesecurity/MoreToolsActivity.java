@@ -4,18 +4,17 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,18 +32,18 @@ public class MoreToolsActivity extends ActionBarActivity {
     private MyAdapter mAdapter;
 
     private static String[] names = {
-            "短信备份", "短信还原","清理优化","流量统计"
+            "短信备份", "短信还原", "清理优化", "流量统计"
     };
     private static int[] icons = {
             R.mipmap.ic_cloud_upload_black_48dp, R.mipmap.ic_cloud_download_black_48dp,
-            R.mipmap.ic_format_paint_black_48dp,R.mipmap.ic_import_export_black_48dp
+            R.mipmap.ic_format_paint_black_48dp, R.mipmap.ic_import_export_black_48dp
     };
 
-    private Handler mHandler=new Handler(){
+    private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (msg.what==BACKUP_SUCCESS){
+            if (msg.what == BACKUP_SUCCESS) {
                 Toast.makeText(MoreToolsActivity.this, (CharSequence) msg.obj, Toast.LENGTH_SHORT).show();
             }
         }
@@ -91,9 +90,9 @@ public class MoreToolsActivity extends ActionBarActivity {
                                         public void run() {
                                             try {
                                                 SmsTools.restoreSms(MoreToolsActivity.this, true);
-                                                Message msg=new Message();
-                                                msg.what=BACKUP_SUCCESS;
-                                                msg.obj="还原成功！";
+                                                Message msg = new Message();
+                                                msg.what = BACKUP_SUCCESS;
+                                                msg.obj = "还原成功！";
                                                 mHandler.sendMessage(msg);
                                             } catch (IOException e) {
                                                 e.printStackTrace();

@@ -13,7 +13,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.linxinzhe.android.xinzhesecurity.LostFoundActivity;
+import com.linxinzhe.android.xinzhesecurity.AntitheftActivity;
 import com.linxinzhe.android.xinzhesecurity.R;
 import com.linxinzhe.android.xinzhesecurity.receiver.MyAdminReceiver;
 
@@ -103,7 +103,7 @@ public class Setup3LostFoundActivity extends BaseSetupActivity {
         editor2.putString("lockpsw", lockPsw);
         editor2.commit();
 
-        Intent intent = new Intent(this, LostFoundActivity.class);
+        Intent intent = new Intent(this, AntitheftActivity.class);
         startActivity(intent);
         finish();
         overridePendingTransition(R.anim.tran_next_in, R.anim.tran_next_out);

@@ -46,7 +46,7 @@
                 android:value="com.linxinzhe.android.xinzhesecurity.HomeActivity" />
         </activity>
         <activity
-            android:name=".LostFoundActivity"
+            android:name=".AntitheftActivity"
             android:label="@string/title_activity_lost_find"
             android:parentActivityName=".HomeActivity" >
             <meta-data

@@ -3,8 +3,8 @@ package com.linxinzhe.android.xinzhesecurity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,12 +32,12 @@ public class HomeActivity extends ActionBarActivity {
     private static String[] names = {
             "手机防盗", "手机杀毒",
             "骚扰拦截", "APP管理",
-            "来电查询","百宝箱"
+            "来电查询", "百宝箱"
     };
     private static int[] icons = {
             R.mipmap.ic_screen_lock_portrait_black_48dp, R.mipmap.ic_security_black_48dp,
             R.mipmap.ic_phone_missed_black_48dp, R.mipmap.ic_dvr_black_48dp,
-            R.mipmap.ic_call_black_48dp,R.mipmap.ic_work_black_48dp,
+            R.mipmap.ic_call_black_48dp, R.mipmap.ic_work_black_48dp,
     };
 
     @Override
@@ -132,7 +132,7 @@ public class HomeActivity extends ActionBarActivity {
                     editor.commit();
                     dialog.dismiss();
                     //进入手机防盗
-                    Intent intent = new Intent(HomeActivity.this, LostFoundActivity.class);
+                    Intent intent = new Intent(HomeActivity.this, AntitheftActivity.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(HomeActivity.this, "密码不一致", Toast.LENGTH_SHORT).show();
@@ -172,7 +172,7 @@ public class HomeActivity extends ActionBarActivity {
                 if (MD5Tools.encrypt(password).equals(savePassword)) {
                     //进入手机防盗页面
                     dialog.dismiss();
-                    Intent intent = new Intent(HomeActivity.this, LostFoundActivity.class);
+                    Intent intent = new Intent(HomeActivity.this, AntitheftActivity.class);
                     startActivity(intent);
                 } else {
                     mSetupPwdET.setText("");

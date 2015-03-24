@@ -1,16 +1,17 @@
 package com.linxinzhe.android.xinzhesecurity;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,7 @@ import com.linxinzhe.android.xinzhesecurity.db.Md5AntivirusDao;
 import com.linxinzhe.android.xinzhesecurity.utils.MD5Tools;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -35,6 +37,9 @@ public class AntivirusActivity extends ActionBarActivity {
 
     private LinearLayout mScanningListLL;
 
+    private List<AppInfo> viruses = new ArrayList<>();
+    private Button mKillVirusBTN;
+    private boolean virusFlag = false;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -49,6 +54,7 @@ public class AntivirusActivity extends ActionBarActivity {
                         tvV.setText("病毒：" + appInfo.appPackageName);
                         tvV.setTextColor(Color.RED);
                         mScanningListLL.addView(tvV, 0);
+                        virusFlag = true;
                     } else {
                         TextView tvC = new TextView(AntivirusActivity.this);
                         tvC.setText("安全：" + appInfo.appPackageName);
@@ -57,8 +63,10 @@ public class AntivirusActivity extends ActionBarActivity {
                     }
                     if (appCount != appTotalNum) {
                         mScanProgressTV.setText((int) ((++appCount) * 1.0 / appTotalNum * 100) + "%");
-                    } else {
-                        mScanProgressTV.setText("100%");
+                        mScanningTV.setText("扫描完毕");
+                        if (virusFlag) {
+                            mKillVirusBTN.setVisibility(View.VISIBLE);
+                        }
                     }
                     break;
             }
@@ -77,11 +85,24 @@ public class AntivirusActivity extends ActionBarActivity {
                 mScanProgressTV.setClickable(false);
                 appCount = 0;
                 scan();
-                mScanProgressTV.setClickable(true);
             }
         });
         mScanningTV = (TextView) findViewById(R.id.tv_scanning);
         mScanningListLL = (LinearLayout) findViewById(R.id.ll_scanning_list);
+        mKillVirusBTN = (Button) findViewById(R.id.btn_kill_virus);
+        mKillVirusBTN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (AppInfo virus : viruses) {
+                    Intent intent = new Intent();
+                    intent.setAction("android.intent.action.VIEW");
+                    intent.setAction("android.intent.action.DELETE");
+                    intent.addCategory("android.intent.category.DEFAULT");
+                    intent.setData(Uri.parse("package:" + virus.appPackageName));
+                    startActivityForResult(intent, 0);
+                }
+            }
+        });
     }
 
 
@@ -111,6 +132,7 @@ public class AntivirusActivity extends ActionBarActivity {
                     appInfo.appPackageName = info.packageName;
                     if (Md5AntivirusDao.isVirus(AntivirusActivity.this, md5File)) {
                         appInfo.isVirus = true;
+                        viruses.add(appInfo);
                     } else {
                         appInfo.isVirus = false;
                     }
@@ -119,6 +141,7 @@ public class AntivirusActivity extends ActionBarActivity {
                     msg.obj = appInfo;
                     mHandler.sendMessage(msg);
                 }
+                mScanProgressTV.setClickable(true);
             }
         }).start();
     }

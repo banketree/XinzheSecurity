@@ -1,8 +1,8 @@
 package com.linxinzhe.android.xinzhesecurity;
 
 import android.content.SharedPreferences;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 
 import com.linxinzhe.android.xinzhesecurity.ui.SettingItemView;

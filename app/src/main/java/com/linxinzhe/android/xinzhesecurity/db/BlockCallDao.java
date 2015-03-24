@@ -1,6 +1,5 @@
 package com.linxinzhe.android.xinzhesecurity.db;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -32,7 +31,7 @@ public class BlockCallDao {
             Cursor cursor = db.rawQuery("SELECT phone,mode FROM blockphone ORDER BY _id desc", null);
             BlockCallInfo info;
             while (cursor.moveToNext()) {
-                info= new BlockCallInfo();
+                info = new BlockCallInfo();
                 info.setPhone(cursor.getString(0));
                 info.setMode(cursor.getString(1));
                 result.add(info);
@@ -43,13 +42,13 @@ public class BlockCallDao {
         return result;
     }
 
-    public BlockCallInfo findInfo(String phone,String mode) {
-        BlockCallInfo info=null;
+    public BlockCallInfo findInfo(String phone, String mode) {
+        BlockCallInfo info = null;
         SQLiteDatabase db = helper.getReadableDatabase();
         if (db.isOpen()) {
-            Cursor cursor = db.rawQuery("SELECT phone,mode FROM blockphone WHERE phone=?,mode=?", new String[]{phone,mode});
+            Cursor cursor = db.rawQuery("SELECT phone,mode FROM blockphone WHERE phone=?,mode=?", new String[]{phone, mode});
             while (cursor.moveToNext()) {
-                info= new BlockCallInfo();
+                info = new BlockCallInfo();
                 info.setPhone(cursor.getString(0));
                 info.setMode(cursor.getString(1));
             }
@@ -104,8 +103,6 @@ public class BlockCallDao {
     }
 
 
-
-
     /**
      * 添加黑名单号码
      *
@@ -113,11 +110,11 @@ public class BlockCallDao {
      * @param mode  拦截模式 1.电话拦截 2.短信拦截 3.全部拦截
      */
     public void add(String phone, String mode) {
-        SQLiteDatabase db=helper.getWritableDatabase();
+        SQLiteDatabase db = helper.getWritableDatabase();
         if (db.isOpen()) {
             db.execSQL("INSERT INTO blockphone VALUES (null,?,?)", new Object[]{phone, mode});
             db.close();
-        }else {
+        } else {
             db.close();
         }
     }
@@ -130,32 +127,33 @@ public class BlockCallDao {
      */
     public void update(String phone, String newmode) {
         SQLiteDatabase db = helper.getWritableDatabase();
-        if(db.isOpen()) {
-            db.execSQL("UPDATE blockphone SET mode=? WHERE phone=?",new String[]{newmode,phone});
+        if (db.isOpen()) {
+            db.execSQL("UPDATE blockphone SET mode=? WHERE phone=?", new String[]{newmode, phone});
             db.close();
         }
     }
 
-    public void update(String newPhone,String newmode, String phone) {
+    public void update(String newPhone, String newmode, String phone) {
         SQLiteDatabase db = helper.getWritableDatabase();
-        if(db.isOpen()) {
-            if (phone==newPhone) {
+        if (db.isOpen()) {
+            if (phone == newPhone) {
                 db.execSQL("UPDATE blockphone SET mode=? WHERE phone=?", new String[]{newmode, phone});
-            }else{
-                db.execSQL("UPDATE blockphone SET phone=?,mode=?, WHERE phone=?", new String[]{newPhone,newmode, phone});
+            } else {
+                db.execSQL("UPDATE blockphone SET phone=?,mode=?, WHERE phone=?", new String[]{newPhone, newmode, phone});
             }
             db.close();
         }
     }
+
     /**
      * 删除黑名单号码
      *
      * @param phone 黑名单号码
      */
     public void delete(String phone) {
-        SQLiteDatabase db=helper.getWritableDatabase();
-        if (db.isOpen()){
-            db.execSQL("DELETE FROM blockphone WHERE phone=?",new Object[]{phone});
+        SQLiteDatabase db = helper.getWritableDatabase();
+        if (db.isOpen()) {
+            db.execSQL("DELETE FROM blockphone WHERE phone=?", new Object[]{phone});
             db.close();
         }
     }

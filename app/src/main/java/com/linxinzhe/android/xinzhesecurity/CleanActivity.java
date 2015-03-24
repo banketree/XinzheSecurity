@@ -6,10 +6,10 @@ import android.content.pm.IPackageStatsObserver;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageStats;
+import android.os.Bundle;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.text.format.Formatter;
 import android.util.Log;
 import android.view.Menu;
@@ -41,13 +41,14 @@ public class CleanActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_clean);
-        mTotalCacheTV= (TextView) findViewById(R.id.tv_cache_size);
+        mTotalCacheTV = (TextView) findViewById(R.id.tv_cache_size);
         mScaningTV = (TextView) findViewById(R.id.tv_scanning);
         mScanningListLL = (LinearLayout) findViewById(R.id.ll_scanning_list);
         scanCache();
     }
 
     private long totalCache;
+
     private void scanCache() {
         pm = getPackageManager();
         new Thread(new Runnable() {
@@ -99,22 +100,22 @@ public class CleanActivity extends ActionBarActivity {
                         mScaningTV.setText("正在扫描：" + appInfo.loadLabel(pm));
                         if (cache > 0) {
                             View view = View.inflate(CleanActivity.this, R.layout.list_item_app_info, null);
-                            ImageView iconTV= (ImageView) view.findViewById(R.id.iv_icon);
+                            ImageView iconTV = (ImageView) view.findViewById(R.id.iv_icon);
                             iconTV.setImageDrawable(appInfo.loadIcon(pm));
-                            TextView nameTV= (TextView) view.findViewById(R.id.tv_name);
+                            TextView nameTV = (TextView) view.findViewById(R.id.tv_name);
                             nameTV.setText(appInfo.loadLabel(pm));
-                            TextView sizeTV= (TextView) view.findViewById(R.id.tv_size);
-                            sizeTV.setText("垃圾大小："+Formatter.formatFileSize(CleanActivity.this, cache));
-                            totalCache+=cache;
-                            mTotalCacheTV.setText("总垃圾："+Formatter.formatFileSize(CleanActivity.this, totalCache));
-                            Button deleteBTN= (Button) view.findViewById(R.id.btn_uninstall);
+                            TextView sizeTV = (TextView) view.findViewById(R.id.tv_size);
+                            sizeTV.setText("垃圾大小：" + Formatter.formatFileSize(CleanActivity.this, cache));
+                            totalCache += cache;
+                            mTotalCacheTV.setText("总垃圾：" + Formatter.formatFileSize(CleanActivity.this, totalCache));
+                            Button deleteBTN = (Button) view.findViewById(R.id.btn_uninstall);
                             deleteBTN.setText("清理");
                             deleteBTN.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
                                     try {
-                                        Method method=PackageManager.class.getMethod("deleteApplicationCacheFiles", String.class, IPackageDataObserver.class);
-                                        method.invoke(pm,packname,new MyPackageDataObserver());
+                                        Method method = PackageManager.class.getMethod("deleteApplicationCacheFiles", String.class, IPackageDataObserver.class);
+                                        method.invoke(pm, packname, new MyPackageDataObserver());
                                     } catch (NoSuchMethodException e) {
                                         e.printStackTrace();
                                     } catch (InvocationTargetException e) {
@@ -127,6 +128,7 @@ public class CleanActivity extends ActionBarActivity {
                             mScanningListLL.addView(view, 0);
                         }
                     }
+
                     ;
                 });
 
@@ -136,7 +138,7 @@ public class CleanActivity extends ActionBarActivity {
         }
     }
 
-    private class MyPackageDataObserver extends IPackageDataObserver.Stub{
+    private class MyPackageDataObserver extends IPackageDataObserver.Stub {
 
         @Override
         public void onRemoveCompleted(String packageName, boolean succeeded) throws RemoteException {
@@ -164,10 +166,10 @@ public class CleanActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.clean) {
             //清理全部缓存
-            Method method= null;
+            Method method = null;
             try {
                 method = PackageManager.class.getMethod("freeStorageAndNotify", long.class, IPackageDataObserver.class);
-                method.invoke(pm,Integer.MAX_VALUE,new MyPackageDataObserver());
+                method.invoke(pm, Integer.MAX_VALUE, new MyPackageDataObserver());
             } catch (NoSuchMethodException e) {
                 e.printStackTrace();
             } catch (InvocationTargetException e) {

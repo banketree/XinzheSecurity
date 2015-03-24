@@ -3,8 +3,8 @@ package com.linxinzhe.android.xinzhesecurity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -159,11 +159,11 @@ public class BlockCallActivity extends ActionBarActivity {
                                 return;
                             }
                             //数据被更新到数据库，并更新界面
-                            String oldPhone=infos.get(position).getPhone();
-                            if(newPhone.equals(oldPhone)){
-                                dao.update(newPhone, mode,oldPhone);
-                            }else{
-                                dao.update(oldPhone,mode);
+                            String oldPhone = infos.get(position).getPhone();
+                            if (newPhone.equals(oldPhone)) {
+                                dao.update(newPhone, mode, oldPhone);
+                            } else {
+                                dao.update(oldPhone, mode);
                             }
                             BlockCallInfo info = new BlockCallInfo();
                             info.setMode(mode);

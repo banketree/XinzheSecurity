@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.linxinzhe.android.xinzhesecurity.LostFoundActivity">
+    tools:context="com.linxinzhe.android.xinzhesecurity.AntitheftActivity">
 
     <TextView
         style="@style/SetupTitle"
@@ -131,12 +131,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="testLock"
-            android:text="测试是锁屏" />
+            android:text="测试锁屏" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="若没开启则会调用激活界面，若开启了则无反应" />
+            android:text="若无反应则表示正常开启" />
     </LinearLayout>
 
 
