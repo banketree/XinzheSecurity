@@ -48,7 +48,7 @@ public class AppManagerActivity extends ActionBarActivity {
         mAppCountTV = (TextView) findViewById(R.id.tv_app_count);
         mAvailableMemoryTV = (TextView) findViewById(R.id.tv_available_memory);
         StatFs statFs = new StatFs(Environment.getDataDirectory().getAbsolutePath());
-        long localMemory = statFs.getAvailableBlocks() * statFs.getBlockSize();
+        long localMemory = (long)statFs.getAvailableBlocks() * statFs.getBlockSize();
         mAvailableMemoryTV.setText("手机剩余空间：" + Formatter.formatFileSize(this, localMemory));
 
         mLoadingLL = (LinearLayout) findViewById(R.id.ll_loading);
