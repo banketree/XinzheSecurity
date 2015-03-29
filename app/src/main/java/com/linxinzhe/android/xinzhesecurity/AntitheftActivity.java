@@ -35,6 +35,7 @@ public class AntitheftActivity extends ActionBarActivity {
             Intent intent = new Intent(this, Setup1LostFoundActivity.class);
             startActivity(intent);
             finish();
+            return;
         }
 
         //设置结果的反映

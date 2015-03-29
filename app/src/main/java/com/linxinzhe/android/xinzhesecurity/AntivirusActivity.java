@@ -63,7 +63,6 @@ public class AntivirusActivity extends ActionBarActivity {
                     }
                     if (appCount != appTotalNum) {
                         mScanProgressTV.setText((int) ((++appCount) * 1.0 / appTotalNum * 100) + "%");
-                        mScanningTV.setText("扫描完毕");
                         if (virusFlag) {
                             mKillVirusBTN.setVisibility(View.VISIBLE);
                         }
