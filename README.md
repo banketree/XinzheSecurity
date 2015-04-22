@@ -10,4 +10,4 @@ Following are its functions:</br>
 - traffic statistics</br>
 All with a basic implementation, not as powerful as commercialm, but the same principle.</br>
 PS. An App Preview is here.(https://github.com/linxinzhe/XinzheSecurity/blob/master/App%20Preview.png)</br>
-Also, this app has a good automated testing result illustrating that it is a reliable, effective app.(http://realauto.testin.cn/s/19jgiov26)
+Also, this app has a good automated testing result illustrating that it is a reliable, effective app.(https://github.com/linxinzhe/XinzheSecurity/blob/master/Automated%20Testing%20Result.png)
