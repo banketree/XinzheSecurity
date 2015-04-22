@@ -56,11 +56,11 @@ public class Setup2LostFoundActivity extends BaseSetupActivity {
     @Override
     public void goNextSetup() {
         //绑定SIM卡才能下一步
-        String sim = sp.getString("sim", null);
-        if (TextUtils.isEmpty(sim)) {
-            Toast.makeText(this, "SIM卡没绑定", Toast.LENGTH_LONG).show();
-            return;
-        }
+//        String sim = sp.getString("sim", null);
+//        if (TextUtils.isEmpty(sim)) {
+//            Toast.makeText(this, "SIM卡没绑定", Toast.LENGTH_LONG).show();
+//            return;
+//        }
 
         //设置安全号码才能下一步
         String phone = mSetupPhoneET.getText().toString().trim();
