@@ -61,6 +61,7 @@ public class MoreToolsActivity extends ActionBarActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = null;
                 switch (position) {
+                    //短信备份
                     case 0:
                         try {
                             SmsTools.backupSms(MoreToolsActivity.this);
@@ -70,6 +71,7 @@ public class MoreToolsActivity extends ActionBarActivity {
                             Toast.makeText(MoreToolsActivity.this, "短信备份失败！", Toast.LENGTH_SHORT).show();
                         }
                         break;
+                    //短信还原
                     case 1:
                         AlertDialog.Builder builder = new AlertDialog.Builder(MoreToolsActivity.this);
                         builder.setTitle("警告");
@@ -112,10 +114,12 @@ public class MoreToolsActivity extends ActionBarActivity {
                         builder.setNegativeButton("取消", null);
                         builder.show();
                         break;
+                    //清理优化
                     case 2:
                         intent = new Intent(MoreToolsActivity.this, CleanActivity.class);
                         startActivity(intent);
                         break;
+                    //流量统计
                     case 3:
                         intent = new Intent(MoreToolsActivity.this, TrafficStatisticsActivity.class);
                         startActivity(intent);

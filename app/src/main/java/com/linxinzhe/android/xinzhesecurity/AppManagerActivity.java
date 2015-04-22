@@ -45,12 +45,14 @@ public class AppManagerActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_manager);
+        //APP安装数及手机剩余空间
         mAppCountTV = (TextView) findViewById(R.id.tv_app_count);
         mAvailableMemoryTV = (TextView) findViewById(R.id.tv_available_memory);
         StatFs statFs = new StatFs(Environment.getDataDirectory().getAbsolutePath());
         long localMemory = (long)statFs.getAvailableBlocks() * statFs.getBlockSize();
         mAvailableMemoryTV.setText("手机剩余空间：" + Formatter.formatFileSize(this, localMemory));
 
+        //读取APP的耗时操作
         mLoadingLL = (LinearLayout) findViewById(R.id.ll_loading);
         mLoadingLL.setVisibility(View.VISIBLE);
         new Thread(new Runnable() {
@@ -109,6 +111,8 @@ public class AppManagerActivity extends ActionBarActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             appInfo = appInfos.get(position);
+            final String packname = appInfo.getPackname();
+
             View view;
             if (convertView == null) {
                 LayoutInflater inflater = AppManagerActivity.this.getLayoutInflater();
@@ -122,7 +126,11 @@ public class AppManagerActivity extends ActionBarActivity {
             sizeTV = (TextView) view.findViewById(R.id.tv_size);
             mUnstallBTN = (Button) view.findViewById(R.id.btn_uninstall);
 
-            final String packname = appInfo.getPackname();
+            //设置APP信息
+            iconIV.setImageDrawable(appInfo.getIcon());
+            nameTV.setText(appInfo.getName());
+
+            //设置启动功能
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -136,9 +144,7 @@ public class AppManagerActivity extends ActionBarActivity {
                 }
             });
 
-            iconIV.setImageDrawable(appInfo.getIcon());
-            nameTV.setText(appInfo.getName());
-
+            //设置卸载功能
             if (appInfo.isUserApp()) {
                 sizeTV.setText("用户App：" + Formatter.formatFileSize(AppManagerActivity.this, appInfo.getMemory()));
                 mUnstallBTN.setOnClickListener(new View.OnClickListener() {

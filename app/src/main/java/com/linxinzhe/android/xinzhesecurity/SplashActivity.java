@@ -137,6 +137,10 @@ public class SplashActivity extends Activity {
         initDatabase("phone_address_mi.db");
     }
 
+    /**
+     * 初始化数据库到本地
+     * @param assets里的数据库资源文件名
+     */
     private void initDatabase(String dbPathStr) {
         InputStream is = null;
         FileOutputStream fos = null;
@@ -160,6 +164,7 @@ public class SplashActivity extends Activity {
             }
         }
     }
+
 
     private void checkUpdate() {
         new Thread(new Runnable() {

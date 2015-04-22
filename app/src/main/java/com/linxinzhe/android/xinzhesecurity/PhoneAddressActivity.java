@@ -49,19 +49,21 @@ public class PhoneAddressActivity extends ActionBarActivity {
 
             }
         });
-        mQueryBTN = (Button) findViewById(R.id.btn_query);
-        mQueryBTN.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String phone = mPhoneET.getText().toString().trim();
-                if (!TextUtils.isEmpty(phone)) {
-                    String address = PhoneAddressQueryDao.query(phone);
-                    mAddressTV.setText("归属地：" + address);
-                } else {
-                    Toast.makeText(PhoneAddressActivity.this, "号码不能为空", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+
+        //原查询的Button设置为Gone
+//        mQueryBTN = (Button) findViewById(R.id.btn_query);
+//        mQueryBTN.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String phone = mPhoneET.getText().toString().trim();
+//                if (!TextUtils.isEmpty(phone)) {
+//                    String address = PhoneAddressQueryDao.query(phone);
+//                    mAddressTV.setText("归属地：" + address);
+//                } else {
+//                    Toast.makeText(PhoneAddressActivity.this, "号码不能为空", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
         mAddressTV = (TextView) findViewById(R.id.tv_phone_address);
     }
 
@@ -91,7 +93,7 @@ public class PhoneAddressActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        //开关来电显示服务
         if (id == R.id.open_incoming_phone_address) {
             if (item.getTitle().equals("关闭来电自动查询")) {
                 Intent intent = new Intent(PhoneAddressActivity.this, IncomingPhoneAddressService.class);

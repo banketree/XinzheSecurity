@@ -29,10 +29,12 @@ import java.util.List;
 public class BlockCallActivity extends ActionBarActivity {
 
     public static final String TAG = "CallSmsSafeActivity";
+
     private ListView lv_callsms_safe;
     private List<BlockCallInfo> infos;
-    private BlockCallDao dao;
     private CallSmsSafeAdapter adapter;
+
+    private BlockCallDao dao;
 
     private TextView mOpenReminderTV;
 
@@ -41,11 +43,16 @@ public class BlockCallActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_call_block);
         lv_callsms_safe = (ListView) findViewById(R.id.lv_call_block);
+
+        //初始化拦截名单
         dao = new BlockCallDao(BlockCallActivity.this);
         infos = dao.findAll();
+
+        //设置名单显示
         adapter = new CallSmsSafeAdapter();
         lv_callsms_safe.setAdapter(adapter);
 
+        //提示是否开启拦截
         mOpenReminderTV = (TextView) findViewById(R.id.tv_call_block_reminder);
         boolean isServiceRunning = ServiceTools.isExists(BlockCallActivity.this, "com.linxinzhe.android.xinzhesecurity.service.BlockCallService");
         if (isServiceRunning) {
@@ -54,6 +61,20 @@ public class BlockCallActivity extends ActionBarActivity {
             mOpenReminderTV.setVisibility(View.VISIBLE);
         }
     }
+
+    //Adapter用属性
+    static class BlockItemHolder {
+        TextView phoneTV;
+        TextView modeTV;
+        Button deleteBTN;
+    }
+
+    //修改信息的对话框用的Field
+    private EditText mPhoneET;
+    private CheckBox mPhoneCB;
+    private CheckBox mSmsCB;
+    private Button mAddBTN;
+    private Button mCancelBTN;
 
     private class CallSmsSafeAdapter extends BaseAdapter {
         @Override
@@ -76,7 +97,10 @@ public class BlockCallActivity extends ActionBarActivity {
                 view = convertView;
                 holder = (BlockItemHolder) view.getTag();//5%
             }
+            //显示拦截电话
             holder.phoneTV.setText(infos.get(position).getPhone());
+
+            //显示拦截模式
             String mode = infos.get(position).getMode();
             if ("1".equals(mode)) {
                 holder.modeTV.setText("来电拦截");
@@ -85,6 +109,8 @@ public class BlockCallActivity extends ActionBarActivity {
             } else {
                 holder.modeTV.setText("全部拦截");
             }
+
+            //删除电话的按钮
             holder.deleteBTN.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -104,14 +130,20 @@ public class BlockCallActivity extends ActionBarActivity {
                     builder.show();
                 }
             });
+
+            //修改拦截信息
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //弹出修改信息的对话框
                     AlertDialog.Builder builder = new AlertDialog.Builder(BlockCallActivity.this);
                     final AlertDialog dialog = builder.create();
                     View contentView = View.inflate(BlockCallActivity.this, R.layout.dialog_add_block_phone, null);
+                    //查询原来电话
                     mPhoneET = (EditText) contentView.findViewById(R.id.et_block_phone);
                     mPhoneET.setText(infos.get(position).getPhone());
+
+                    //查询原来拦截模式
                     mPhoneCB = (CheckBox) contentView.findViewById(R.id.cb_phone);
                     mSmsCB = (CheckBox) contentView.findViewById(R.id.cb_sms);
                     String mode = infos.get(position).getMode();
@@ -126,16 +158,17 @@ public class BlockCallActivity extends ActionBarActivity {
                         mSmsCB.setChecked(true);
                     }
                     mCancelBTN = (Button) contentView.findViewById(R.id.btn_cancel);
-                    mAddBTN = (Button) contentView.findViewById(R.id.btn_add);
-                    dialog.setView(contentView, 0, 0, 0, 0);
-                    dialog.show();
-
                     mCancelBTN.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             dialog.dismiss();
                         }
                     });
+                    mAddBTN = (Button) contentView.findViewById(R.id.btn_add);
+                    dialog.setView(contentView, 0, 0, 0, 0);
+                    dialog.show();
+
+                    //修改数据库内容并更新UI
                     mAddBTN.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -190,21 +223,7 @@ public class BlockCallActivity extends ActionBarActivity {
         }
     }
 
-    static class BlockItemHolder {
-        TextView phoneTV;
-        TextView modeTV;
-        Button deleteBTN;
-    }
-
-
-    private EditText mPhoneET;
-    private CheckBox mPhoneCB;
-    private CheckBox mSmsCB;
-    private Button mAddBTN;
-    private Button mCancelBTN;
-
     private Menu menu = null;
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -229,7 +248,7 @@ public class BlockCallActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
+        //修改信息的对话框
         if (id == R.id.add_phone) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             final AlertDialog dialog = builder.create();

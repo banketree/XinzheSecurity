@@ -88,6 +88,8 @@ public class AntivirusActivity extends ActionBarActivity {
         });
         mScanningTV = (TextView) findViewById(R.id.tv_scanning);
         mScanningListLL = (LinearLayout) findViewById(R.id.ll_scanning_list);
+
+        //是病毒则提供卸载功能
         mKillVirusBTN = (Button) findViewById(R.id.btn_kill_virus);
         mKillVirusBTN.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -124,11 +126,16 @@ public class AntivirusActivity extends ActionBarActivity {
                 for (PackageInfo info : packageInfos) {
                     sourceDir = info.applicationInfo.sourceDir;
                     file = new File(sourceDir);
+
+                    //获取文件的MD5值
                     String md5File = MD5Tools.encrypt(file);
+
                     Log.i(TAG, sourceDir + ":" + md5File);
                     appInfo = new AppInfo();
                     appInfo.appName = info.applicationInfo.loadLabel(pm).toString();
                     appInfo.appPackageName = info.packageName;
+
+                    //对比MD5值判断是否病毒
                     if (Md5AntivirusDao.isVirus(AntivirusActivity.this, md5File)) {
                         appInfo.isVirus = true;
                         viruses.add(appInfo);
